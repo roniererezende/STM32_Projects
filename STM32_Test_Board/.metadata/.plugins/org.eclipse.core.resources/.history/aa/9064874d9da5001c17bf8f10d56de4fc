@@ -1,0 +1,24 @@
+/*
+ * GPIO_Input.c
+ *
+ *  Created on: 16 de mar de 2022
+ *      Author: Roniere
+ */
+
+#include "../Inc/STM32_Test_Board/STM32_Test_Board.h"
+
+void GPIO_Input_Execution(void)
+{
+
+}
+
+void Teclado_Iniciar(void)
+{
+	Neurodyn_DC.Teclado.Botao_Intensidade_Mais.portX         = BUTTON_ONE_GPIO_Port;
+	Neurodyn_DC.Teclado.Botao_Intensidade_Mais.pinX 		 = BUTTON_ONE_Pin;
+	Neurodyn_DC.Teclado.Botao_Intensidade_Mais.Tipo_De_Pull  = Botao_Pull_Up;
+
+	Neurodyn_DC.Teclado.Botao_Intensidade_Menos.portX        = BUTTON_TWO_GPIO_Port;
+	Neurodyn_DC.Teclado.Botao_Intensidade_Menos.pinX         = BUTTON_TWO_Pin;
+	Neurodyn_DC.Teclado.Botao_Intensidade_Menos.Tipo_De_Pull = Botao_Pull_Up;
+}

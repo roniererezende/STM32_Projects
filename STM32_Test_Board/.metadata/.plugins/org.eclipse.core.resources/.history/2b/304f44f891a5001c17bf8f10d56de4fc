@@ -1,0 +1,24 @@
+/*
+ * GPIO_Output.h
+ *
+ *  Created on: 16 de mar de 2022
+ *      Author: Roniere
+ */
+
+#ifndef INC_STM32_TEST_BOARD_GPIO_OUTPUT_H_
+#define INC_STM32_TEST_BOARD_GPIO_OUTPUT_H_
+
+#define LED_1_HIGH_STATE	HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, GPIO_PIN_SET);
+#define LED_1_LOW_STATE		HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, GPIO_PIN_RESET);
+#define LED_1_TOGGLE        HAL_GPIO_Toggle(LED_1_GPIO_Port, LED_1_Pin);
+
+#define LED_2_HIGH_STATE	HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_SET);
+#define LED_2_LOW_STATE		HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, GPIO_PIN_RESET);
+#define LED_2_TOGGLE        HAL_GPIO_Toggle(LED_2_GPIO_Port, LED_2_Pin);
+
+
+void GPIO_Output_Execution(void);
+
+
+
+#endif /* INC_STM32_TEST_BOARD_GPIO_OUTPUT_H_ */
