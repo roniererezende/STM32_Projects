@@ -5,12 +5,18 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../Core/Src/STM32_Test_Board/GPIO_Input.c \
+../Core/Src/STM32_Test_Board/GPIO_Output.c \
 ../Core/Src/STM32_Test_Board/STM32_Test_Board.c 
 
 OBJS += \
+./Core/Src/STM32_Test_Board/GPIO_Input.o \
+./Core/Src/STM32_Test_Board/GPIO_Output.o \
 ./Core/Src/STM32_Test_Board/STM32_Test_Board.o 
 
 C_DEPS += \
+./Core/Src/STM32_Test_Board/GPIO_Input.d \
+./Core/Src/STM32_Test_Board/GPIO_Output.d \
 ./Core/Src/STM32_Test_Board/STM32_Test_Board.d 
 
 
@@ -21,7 +27,7 @@ Core/Src/STM32_Test_Board/%.o: ../Core/Src/STM32_Test_Board/%.c Core/Src/STM32_T
 clean: clean-Core-2f-Src-2f-STM32_Test_Board
 
 clean-Core-2f-Src-2f-STM32_Test_Board:
-	-$(RM) ./Core/Src/STM32_Test_Board/STM32_Test_Board.d ./Core/Src/STM32_Test_Board/STM32_Test_Board.o
+	-$(RM) ./Core/Src/STM32_Test_Board/GPIO_Input.d ./Core/Src/STM32_Test_Board/GPIO_Input.o ./Core/Src/STM32_Test_Board/GPIO_Output.d ./Core/Src/STM32_Test_Board/GPIO_Output.o ./Core/Src/STM32_Test_Board/STM32_Test_Board.d ./Core/Src/STM32_Test_Board/STM32_Test_Board.o
 
 .PHONY: clean-Core-2f-Src-2f-STM32_Test_Board
 

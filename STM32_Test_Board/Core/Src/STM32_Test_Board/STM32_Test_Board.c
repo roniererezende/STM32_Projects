@@ -15,13 +15,14 @@ void STM32_Test_Board_Main(void)
 {
 	switch (STM32_Test_Board.States)
 	{
+		// Initializes all peripheral here
 		case E_Initialization:
-			// Initializes all peripheral here
 			STM32_Test_Board.States = E_Execution;
 		break;
 
+		// Performs all routines here
 		case E_Execution:
-			// Performs all routines here
+			GPIO_Output_Execution();
 		break;
 	}
 }
