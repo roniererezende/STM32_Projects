@@ -11,11 +11,11 @@
 ///////////////////////////////////////////////////////////////
 // DEFINES
 ///////////////////////////////////////////////////////////////
-#define GPIO_INPUT_DEBOUNCE_AVERAGE_NUMBER                        2	  // ms -> Default -> 5
-#define TECLADO_DELAY_ENTRE_CADA_SAMPLE                     2     // ms -> Default -> 5
-#define GPIO_SUCCESS_DEBOUNCE_THRESHOLD                      0.75f // percentage of correctness needed, both for pressure and for release
-#define TECLADO_DELAY_ENTRE_CADA_PROCESSAMENTO_DE_TECLA   100     // ms -> Default -> 100
-#define TECLADO_TEMPO_ESPERA_TOQUE_BOTAO                30000     // ms -> Time value to wait pressing any button
+#define GPIO_INPUT_DEBOUNCE_AVERAGE_NUMBER              2	  // ms -> Default -> 5
+#define GPIO_INPUT_DELAY_AMONG_EACH_SAMPLE              2     // ms -> Default -> 5
+#define GPIO_SUCCESS_DEBOUNCE_THRESHOLD                0.75f // percentage of correctness needed, both for pressure and for release
+#define GPIO_INPUT_DELAY_AMONG_EACH_PROCESSING_KEY   100     // ms -> Default -> 100
+#define GPIO_INPUT_TIME_WAIT_TOUCH_BUTTON          30000     // ms -> Time value to wait pressing any button
 
 
 
@@ -69,7 +69,7 @@ typedef struct s_Button
 typedef struct s_Botao_Timers
 {
 	uint32_t Generic;
-	uint32_t Timer_Held_Buttons;
+	uint32_t Timer_Hold_Buttons;
 }s_Botao_Timers;
 
 typedef struct s_GPIO_Input
@@ -89,8 +89,17 @@ typedef struct s_GPIO_Input
 	uint16_t Counter_Backlight;
 }s_GPIO_Input;
 
-void GPIO_Input_Execution(void);
-void GPIO_Input_Read_Button(s_Button *Button);
+void GPIO_Input_Init(void);
+void GPIO_Input_Reading_Button(s_Button *Button);
+void GPIO_Input_Process(void);
+void GPIO_Input_Process_Button(s_Button *Button);
+_Bool GPIO_Input_Any_Button_Is_Waiting_perform_Function(void);
+void GPIO_Input_Process_Button_One(void);
+void GPIO_Input_Process_Button_Two(void);
+void GPIO_Input_Process_Button_Three(void);
+void GPIO_Input_Process_Button_Four(void);
+void GPIO_Input_Process_Button_Five(void);
+
 void GPIO_Input_Processing_Keyboard(void);
 
 #endif /* INC_STM32_TEST_BOARD_GPIO_INPUT_H_ */

@@ -7,11 +7,6 @@
 
 #include "../Inc/STM32_Test_Board/STM32_Test_Board.h"
 
-void GPIO_Input_Execution(void)
-{
-
-}
-
 void GPIO_Input_Init(void)
 {
 	STM32_Test_Board.GPIO_Input.Button_One.portX       = BUTTON_ONE_GPIO_Port;
@@ -47,7 +42,31 @@ void GPIO_Input_Reading_Button(s_Button *Button)
 	}
 }
 
-void GPIO_Input_Processing_Button(s_Button *Button)
+void GPIO_Input_Process(void)
+{
+	if(STM32_Test_Board.GPIO_Input.Timers.Generic == 0)
+	{
+		GPIO_Input_Process_Button(&STM32_Test_Board.GPIO_Input.Button_One);
+		GPIO_Input_Process_Button(&STM32_Test_Board.GPIO_Input.Button_Two);
+		GPIO_Input_Process_Button(&STM32_Test_Board.GPIO_Input.Button_Three);
+		GPIO_Input_Process_Button(&STM32_Test_Board.GPIO_Input.Button_Four);
+		GPIO_Input_Process_Button(&STM32_Test_Board.GPIO_Input.Button_Five);
+
+		STM32_Test_Board.GPIO_Input.Timers.Generic = GPIO_INPUT_DELAY_AMONG_EACH_SAMPLE;
+	}
+
+	if(STM32_Test_Board.GPIO_Input.Timers.Timer_Hold_Buttons == 0)
+	{
+		GPIO_Input_Process_Button_One();
+		GPIO_Input_Process_Button_Two();
+		GPIO_Input_Process_Button_Three();
+		GPIO_Input_Process_Button_Four();
+		GPIO_Input_Process_Button_Five();
+		STM32_Test_Board.GPIO_Input.Timers.Timer_Hold_Buttons = GPIO_INPUT_DELAY_AMONG_EACH_PROCESSING_KEY;
+	}
+}
+
+void GPIO_Input_Process_Button(s_Button *Button)
 {
 	switch(Button->State)
 	{
@@ -64,7 +83,7 @@ void GPIO_Input_Processing_Button(s_Button *Button)
 				break;
 			}
 
-			GPIO_Input_Read_Button(Button);
+			GPIO_Input_Reading_Button(Button);
 
 			if(Button->Reading_Pressed)
 			{
@@ -75,7 +94,7 @@ void GPIO_Input_Processing_Button(s_Button *Button)
 		break;
 
 		case E_Button_Performing_Debounce_Pressing:
-			GPIO_Input_Read_Button(Button);
+			GPIO_Input_Reading_Button(Button);
 			Button->Debounce_Average += Button->Reading_Pressed;
 			Button->Samples_Counter++;
 
@@ -115,12 +134,107 @@ void GPIO_Input_Processing_Button(s_Button *Button)
 
 			if(Button->Samples_Counter >= GPIO_INPUT_DEBOUNCE_AVERAGE_NUMBER)
 			{
+				Button->Debounce_Average = (float)Button->Debounce_Average / Button->Samples_Counter;
 
+				if(Button->Debounce_Average <= (float)(1 - GPIO_SUCCESS_DEBOUNCE_THRESHOLD) && Button->Should_Ignore_Behavior_Clicked == false)
+				{
+					Button->Behavior = Button_Clicked;
+					Button->Waiting_Perform_Function = true;
+					STM32_Test_Board.GPIO_Input.Timers.Timer_Hold_Buttons = 0;
+					STM32_Test_Board.GPIO_Input.Performing_Debounce_Any_Key = false;
+					Button->State = E_Button_Start;
+				}
+				else
+				{
+					Button->Debounce_Average = 0;
+					Button->Samples_Counter = 0;
+					Button->Behavior = Button_No_Pressed;
+					Button->State = E_Button_Waiting_First_Pressing;
+					Button->Waiting_Perform_Function = false;
+					STM32_Test_Board.GPIO_Input.Performing_Debounce_Any_Key = false;
+				}
 			}
-
 		break;
 	}
 }
+
+_Bool GPIO_Input_Any_Button_Is_Waiting_perform_Function(void)
+{
+	if(STM32_Test_Board.GPIO_Input.Button_One.Waiting_Perform_Function   ||
+	   STM32_Test_Board.GPIO_Input.Button_Two.Waiting_Perform_Function   ||
+	   STM32_Test_Board.GPIO_Input.Button_Three.Waiting_Perform_Function ||
+	   STM32_Test_Board.GPIO_Input.Button_Four.Waiting_Perform_Function  ||
+	   STM32_Test_Board.GPIO_Input.Button_Five.Waiting_Perform_Function )
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+void GPIO_Input_Process_Button_One(void)
+{
+	if(STM32_Test_Board.GPIO_Input.Button_One.Behavior == Button_Clicked)
+	{
+		LED_LIGHT_LOW_STATE;
+	}
+	else
+	{
+		LED_LIGHT_TOGGLE_STATE;
+	}
+}
+
+void GPIO_Input_Process_Button_Two(void)
+{
+	if(STM32_Test_Board.GPIO_Input.Button_Two.Behavior == Button_Clicked)
+	{
+		LED_YELLOW_LOW_STATE;
+	}
+	else
+	{
+		LED_YELLOW_TOGGLE_STATE;
+	}
+}
+
+void GPIO_Input_Process_Button_Three(void)
+{
+	if(STM32_Test_Board.GPIO_Input.Button_Three.Behavior == Button_Clicked)
+	{
+		LED_BLUE_A_LOW_STATE;
+	}
+	else
+	{
+		LED_BLUE_A_TOGGLE_STATE;
+	}
+}
+
+void GPIO_Input_Process_Button_Four(void)
+{
+	if(STM32_Test_Board.GPIO_Input.Button_Four.Behavior == Button_Clicked)
+	{
+		LED_RED_A_LOW_STATE;
+	}
+	else
+	{
+		LED_RED_A_TOGGLE_STATE;
+	}
+}
+
+void GPIO_Input_Process_Button_Five(void)
+{
+	if(STM32_Test_Board.GPIO_Input.Button_Five.Behavior == Button_Clicked)
+	{
+		LED_GREEN_LOW_STATE;
+	}
+	else
+	{
+		LED_GREEN_TOGGLE_STATE;
+	}
+}
+
+
 void GPIO_Input_Processing_Keyboard(void)
 {
 	/* Button Debounce */
