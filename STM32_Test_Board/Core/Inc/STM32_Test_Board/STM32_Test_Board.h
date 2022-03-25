@@ -15,6 +15,7 @@
 #include "main.h"
 #include "tim.h"
 #include "gpio.h"
+#include "stm32g0xx_it.h"
 
 #include "GPIO_Output.h"
 #include "GPIO_Input.h"

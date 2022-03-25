@@ -44,6 +44,7 @@ void GPIO_Input_Reading_Button(s_Button *Button)
 
 void GPIO_Input_Process(void)
 {
+	/* Button Debounce */
 	if(STM32_Test_Board.GPIO_Input.Timers.Generic == 0)
 	{
 		GPIO_Input_Process_Button(&STM32_Test_Board.GPIO_Input.Button_One);
@@ -55,13 +56,14 @@ void GPIO_Input_Process(void)
 		STM32_Test_Board.GPIO_Input.Timers.Generic = GPIO_INPUT_DELAY_AMONG_EACH_SAMPLE;
 	}
 
+	/* Button Behavior */
 	if(STM32_Test_Board.GPIO_Input.Timers.Timer_Hold_Buttons == 0)
 	{
 		GPIO_Input_Process_Button_One();
 		GPIO_Input_Process_Button_Two();
 		GPIO_Input_Process_Button_Three();
 		GPIO_Input_Process_Button_Four();
-		GPIO_Input_Process_Button_Five();
+//		GPIO_Input_Process_Button_Five();
 		STM32_Test_Board.GPIO_Input.Timers.Timer_Hold_Buttons = GPIO_INPUT_DELAY_AMONG_EACH_PROCESSING_KEY;
 	}
 }
@@ -72,7 +74,7 @@ void GPIO_Input_Process_Button(s_Button *Button)
 	{
 		case E_Button_Start:
 			Button->Debounce_Average = 0;
-			Button->Samples_Counter   = 0;
+			Button->Samples_Counter  = 0;
 			Button->Behavior         = Button_No_Pressed;
 			Button->State            = E_Button_Waiting_First_Pressing;
 		break;
@@ -178,61 +180,61 @@ void GPIO_Input_Process_Button_One(void)
 {
 	if(STM32_Test_Board.GPIO_Input.Button_One.Behavior == Button_Clicked)
 	{
-		LED_LIGHT_LOW_STATE;
-	}
-	else
-	{
 		LED_LIGHT_TOGGLE_STATE;
 	}
+//	else
+//	{
+//		LED_LIGHT_TOGGLE_STATE;
+//	}
 }
 
 void GPIO_Input_Process_Button_Two(void)
 {
 	if(STM32_Test_Board.GPIO_Input.Button_Two.Behavior == Button_Clicked)
 	{
-		LED_YELLOW_LOW_STATE;
-	}
-	else
-	{
 		LED_YELLOW_TOGGLE_STATE;
 	}
+//	else
+//	{
+//		LED_YELLOW_TOGGLE_STATE;
+//	}
 }
 
 void GPIO_Input_Process_Button_Three(void)
 {
 	if(STM32_Test_Board.GPIO_Input.Button_Three.Behavior == Button_Clicked)
 	{
-		LED_BLUE_A_LOW_STATE;
-	}
-	else
-	{
 		LED_BLUE_A_TOGGLE_STATE;
 	}
+//	else
+//	{
+//		LED_BLUE_A_TOGGLE_STATE;
+//	}
 }
 
 void GPIO_Input_Process_Button_Four(void)
 {
 	if(STM32_Test_Board.GPIO_Input.Button_Four.Behavior == Button_Clicked)
 	{
-		LED_RED_A_LOW_STATE;
-	}
-	else
-	{
 		LED_RED_A_TOGGLE_STATE;
 	}
+//	else
+//	{
+//		LED_RED_A_TOGGLE_STATE;
+//	}
 }
 
-void GPIO_Input_Process_Button_Five(void)
-{
-	if(STM32_Test_Board.GPIO_Input.Button_Five.Behavior == Button_Clicked)
-	{
-		LED_GREEN_LOW_STATE;
-	}
-	else
-	{
-		LED_GREEN_TOGGLE_STATE;
-	}
-}
+//void GPIO_Input_Process_Button_Five(void)
+//{
+//	if(STM32_Test_Board.GPIO_Input.Button_Five.Behavior == Button_Clicked)
+//	{
+//		LED_GREEN_TOGGLE_STATE;
+//	}
+////	else
+////	{
+////		LED_GREEN_TOGGLE_STATE;
+////	}
+//}
 
 
 void GPIO_Input_Processing_Keyboard(void)

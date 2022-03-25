@@ -1,6 +1,6 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
-# Toolchain: GNU Tools for STM32 (9-2020-q2-update)
+# Toolchain: GNU Tools for STM32 (10.3-2021.10)
 ################################################################################
 
 -include ../makefile.init
@@ -44,14 +44,14 @@ BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ART
 EXECUTABLES += \
 STM32_Test_Board.elf \
 
+MAP_FILES += \
+STM32_Test_Board.map \
+
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
 STM32_Test_Board.list \
-
-OBJCOPY_BIN += \
-STM32_Test_Board.bin \
 
 
 # All Target
@@ -61,7 +61,7 @@ all: main-build
 main-build: STM32_Test_Board.elf secondary-outputs
 
 # Tool invocations
-STM32_Test_Board.elf: $(OBJS) $(USER_OBJS) E:\Users\Roniere\ Resende\Documents\Meus\ Documentos\Estudo\ de\ Tecnologias\Postgraduate\ Studies\Embedded\ Electronic\Class\10\ -\ Course\ Conclusion\ Project\STM32_Test_Board\STM32_Test_Board\STM32G071RBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+STM32_Test_Board.elf STM32_Test_Board.map: $(OBJS) $(USER_OBJS) E:\Users\Roniere\ Resende\Documents\Meus\ Documentos\Estudo\ de\ Tecnologias\Postgraduate\ Studies\Embedded\ Electronic\Class\10\ -\ Course\ Conclusion\ Project\STM32_Test_Board\STM32_Test_Board\STM32G071RBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	arm-none-eabi-gcc -o "STM32_Test_Board.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0plus -T"E:\Users\Roniere Resende\Documents\Meus Documentos\Estudo de Tecnologias\Postgraduate Studies\Embedded Electronic\Class\10 - Course Conclusion Project\STM32_Test_Board\STM32_Test_Board\STM32G071RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32_Test_Board.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
@@ -76,17 +76,12 @@ STM32_Test_Board.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS
 	@echo 'Finished building: $@'
 	@echo ' '
 
-STM32_Test_Board.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "STM32_Test_Board.bin"
-	@echo 'Finished building: $@'
-	@echo ' '
-
 # Other Targets
 clean:
-	-$(RM) STM32_Test_Board.bin STM32_Test_Board.elf STM32_Test_Board.list default.size.stdout
+	-$(RM) STM32_Test_Board.elf STM32_Test_Board.list STM32_Test_Board.map default.size.stdout
 	-@echo ' '
 
-secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_BIN)
+secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
 
 fail-specified-linker-script-missing:
 	@echo 'Error: Cannot find the specified linker script. Check the linker settings in the build configuration.'

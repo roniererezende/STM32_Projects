@@ -17,6 +17,9 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
+#include "main.h"
+#include "tim.h"
+#include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -60,6 +63,15 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		if(STM32_Test_Board.Timer_Generico > 0) STM32_Test_Board.Timer_Generico --;
 		if(STM32_Test_Board.GPIO_Input.Timers.Generic > 0) STM32_Test_Board.GPIO_Input.Timers.Generic--;
 		if(STM32_Test_Board.GPIO_Input.Timers.Timer_Hold_Buttons > 0) STM32_Test_Board.GPIO_Input.Timers.Timer_Hold_Buttons--;
+		LED_RED_B_TOGGLE_STATE;
+	}
+}
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	if(GPIO_Pin == GPIO_PIN_5)
+	{
+		LED_BLUE_B_TOGGLE_STATE;
 	}
 }
 
