@@ -51,7 +51,7 @@ void GPIO_Input_Process(void)
 		GPIO_Input_Process_Button(&STM32_Test_Board.GPIO_Input.Button_Two);
 		GPIO_Input_Process_Button(&STM32_Test_Board.GPIO_Input.Button_Three);
 		GPIO_Input_Process_Button(&STM32_Test_Board.GPIO_Input.Button_Four);
-		GPIO_Input_Process_Button(&STM32_Test_Board.GPIO_Input.Button_Five);
+//		GPIO_Input_Process_Button(&STM32_Test_Board.GPIO_Input.Button_Five);
 
 		STM32_Test_Board.GPIO_Input.Timers.Generic = GPIO_INPUT_DELAY_AMONG_EACH_SAMPLE;
 	}
@@ -178,7 +178,7 @@ _Bool GPIO_Input_Any_Button_Is_Waiting_perform_Function(void)
 
 void GPIO_Input_Process_Button_One(void)
 {
-	if(STM32_Test_Board.GPIO_Input.Button_One.Behavior == Button_Clicked)
+ 	if(STM32_Test_Board.GPIO_Input.Button_One.Behavior == Button_Clicked)
 	{
 		LED_LIGHT_TOGGLE_STATE;
 	}

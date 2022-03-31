@@ -5,16 +5,22 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../Core/Src/STM32_Test_Board/ADC_PERIPHERAL.c \
+../Core/Src/STM32_Test_Board/Display_16x2.c \
 ../Core/Src/STM32_Test_Board/GPIO_Input.c \
 ../Core/Src/STM32_Test_Board/GPIO_Output.c \
 ../Core/Src/STM32_Test_Board/STM32_Test_Board.c 
 
 OBJS += \
+./Core/Src/STM32_Test_Board/ADC_PERIPHERAL.o \
+./Core/Src/STM32_Test_Board/Display_16x2.o \
 ./Core/Src/STM32_Test_Board/GPIO_Input.o \
 ./Core/Src/STM32_Test_Board/GPIO_Output.o \
 ./Core/Src/STM32_Test_Board/STM32_Test_Board.o 
 
 C_DEPS += \
+./Core/Src/STM32_Test_Board/ADC_PERIPHERAL.d \
+./Core/Src/STM32_Test_Board/Display_16x2.d \
 ./Core/Src/STM32_Test_Board/GPIO_Input.d \
 ./Core/Src/STM32_Test_Board/GPIO_Output.d \
 ./Core/Src/STM32_Test_Board/STM32_Test_Board.d 
@@ -27,7 +33,7 @@ Core/Src/STM32_Test_Board/%.o Core/Src/STM32_Test_Board/%.su: ../Core/Src/STM32_
 clean: clean-Core-2f-Src-2f-STM32_Test_Board
 
 clean-Core-2f-Src-2f-STM32_Test_Board:
-	-$(RM) ./Core/Src/STM32_Test_Board/GPIO_Input.d ./Core/Src/STM32_Test_Board/GPIO_Input.o ./Core/Src/STM32_Test_Board/GPIO_Input.su ./Core/Src/STM32_Test_Board/GPIO_Output.d ./Core/Src/STM32_Test_Board/GPIO_Output.o ./Core/Src/STM32_Test_Board/GPIO_Output.su ./Core/Src/STM32_Test_Board/STM32_Test_Board.d ./Core/Src/STM32_Test_Board/STM32_Test_Board.o ./Core/Src/STM32_Test_Board/STM32_Test_Board.su
+	-$(RM) ./Core/Src/STM32_Test_Board/ADC_PERIPHERAL.d ./Core/Src/STM32_Test_Board/ADC_PERIPHERAL.o ./Core/Src/STM32_Test_Board/ADC_PERIPHERAL.su ./Core/Src/STM32_Test_Board/Display_16x2.d ./Core/Src/STM32_Test_Board/Display_16x2.o ./Core/Src/STM32_Test_Board/Display_16x2.su ./Core/Src/STM32_Test_Board/GPIO_Input.d ./Core/Src/STM32_Test_Board/GPIO_Input.o ./Core/Src/STM32_Test_Board/GPIO_Input.su ./Core/Src/STM32_Test_Board/GPIO_Output.d ./Core/Src/STM32_Test_Board/GPIO_Output.o ./Core/Src/STM32_Test_Board/GPIO_Output.su ./Core/Src/STM32_Test_Board/STM32_Test_Board.d ./Core/Src/STM32_Test_Board/STM32_Test_Board.o ./Core/Src/STM32_Test_Board/STM32_Test_Board.su
 
 .PHONY: clean-Core-2f-Src-2f-STM32_Test_Board
 

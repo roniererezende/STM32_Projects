@@ -57,6 +57,10 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define LM35_IN_Pin GPIO_PIN_0
+#define LM35_IN_GPIO_Port GPIOA
+#define POT_IN_Pin GPIO_PIN_1
+#define POT_IN_GPIO_Port GPIOA
 #define BUTTON_FIVE_Pin GPIO_PIN_5
 #define BUTTON_FIVE_GPIO_Port GPIOC
 #define BUTTON_FIVE_EXTI_IRQn EXTI4_15_IRQn
@@ -82,6 +86,18 @@ void Error_Handler(void);
 #define LED_RED_B_GPIO_Port GPIOA
 #define LED_GREEN_Pin GPIO_PIN_6
 #define LED_GREEN_GPIO_Port GPIOC
+#define DISP_D4_Pin GPIO_PIN_0
+#define DISP_D4_GPIO_Port GPIOD
+#define DISP_D5_Pin GPIO_PIN_1
+#define DISP_D5_GPIO_Port GPIOD
+#define DISP_D6_Pin GPIO_PIN_2
+#define DISP_D6_GPIO_Port GPIOD
+#define DISP_D7_Pin GPIO_PIN_3
+#define DISP_D7_GPIO_Port GPIOD
+#define DISP_RS_Pin GPIO_PIN_4
+#define DISP_RS_GPIO_Port GPIOD
+#define DISP_EN_Pin GPIO_PIN_5
+#define DISP_EN_GPIO_Port GPIOD
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
