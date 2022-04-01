@@ -11,8 +11,12 @@
 /* INCLUDES */
 #include <stdint.h>
 #include <stdbool.h>
+#include <string.h>
+#include <stdio.h>
+#include <stdarg.h>
 
 #include "main.h"
+#include "stm32g071xx.h"
 #include "adc.h"
 #include "dma.h"
 #include "tim.h"
