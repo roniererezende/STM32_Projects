@@ -7,43 +7,29 @@
 
 #include "../Inc/STM32_Test_Board/STM32_Test_Board.h"
 
-void Display_16x2_Variable_Init(void)
+unsigned char Display_16x2_Custom_Character_5x8[] = {
+  0b00000,0b01110,0b01010,0b01110,0b00000,0b00000,0b00000,0b00000, // Code for CGRAM memory space 1
+  0b10000,0b01000,0b00100,0b00010,0b00001,0b00010,0b00100,0b01000, // Code for CGRAM memory space 2
+  0b00000,0b00000,0b00000,0b00000,0b00000,0b00000,0b00000,0b00000, // Code for CGRAM memory space 3
+  0b00000,0b00000,0b00000,0b00000,0b00000,0b00000,0b00000,0b00000, // Code for CGRAM memory space 4
+  0b00000,0b00000,0b00000,0b00000,0b00000,0b00000,0b00000,0b00000, // Code for CGRAM memory space 5
+  0b00000,0b00000,0b00000,0b00000,0b00000,0b00000,0b00000,0b00000, // Code for CGRAM memory space 6
+  0b10000,0b00000,0b00000,0b00000,0b00000,0b00000,0b00000,0b00000, // Code for CGRAM memory space 7
+  0b11111,0b10001,0b10001,0b10001,0b10001,0b10001,0b10001,0b11111, // Code for CGRAM memory space 8
+};
+
+void Display_16x2_Init(void)
 {
 	STM32_Test_Board.Display_16x2.Is8BitsMode  = true;
 	STM32_Test_Board.Display_16x2.Control	   = 0x0F;
 	STM32_Test_Board.Display_16x2.Function_Set = 0x38;
-}
 
-/* private functions prototypes */
-/**
- * @brief DWT Cortex Tick counter for Microsecond delay
- */
-//static uint32_t Display_16x2_DWT_Delay_Init(void)
-//{
-	/* Disable TRC */
-	//CoreDebug->DEMCR &= ~CoreDebug_DEMCR_TRCENA_Msk;
-	/* Enable TRC */
-	//CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
-	/* Disable clock cycle counter */
-	//DWT->CTRL &= ~DWT_CTRL_CYCCNTENA_Msk;
-	/* Enable clock cycle counter */
-	//DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
-	/* Reset the clock cycle counter value */
-	//DWT->CYCCNT = 0;
-	/* 3 NO OPERATION instructions */
-//	__NOP();
-//	__NOP();
-//	__NOP();
-	/* Check if clock cycle counter has started */
-	//if(DWT->CYCCNT)
-	//{
-	//return 0;
-	//}
-	//else
-	//{
-//	return 1;
-	//}
-//}
+
+	Display_16x2_Init_4_Bits(GPIOD, DISP_RS_Pin, DISP_EN_Pin, GPIOD, DISP_D4_Pin, DISP_D5_Pin, DISP_D6_Pin, DISP_D7_Pin);
+	Display_16x2_Creates_Custom_Character(&Display_16x2_Custom_Character_5x8[0],0);
+	Display_16x2_Cursor_Show(false);
+	Display_16x2_Clear();
+}
 
 /**
  * @brief Enable Pulse function
@@ -51,9 +37,10 @@ void Display_16x2_Variable_Init(void)
 static void Display_16x2_Enable_Pulse(void)
 {
   HAL_GPIO_WritePin(STM32_Test_Board.Display_16x2.Port_RS_And_EN, STM32_Test_Board.Display_16x2.Pin_EN, GPIO_PIN_SET);
-  HAL_Delay(T_CONST);
+  //HAL_Delay(T_CONST);
+  Delay_us(T_CONST);
   HAL_GPIO_WritePin(STM32_Test_Board.Display_16x2.Port_RS_And_EN, STM32_Test_Board.Display_16x2.Pin_EN, GPIO_PIN_RESET);
-  HAL_Delay(60);
+  Delay_us(60);
 }
 
 /**
@@ -153,13 +140,13 @@ void Display_16x2_Init_8_bits(
 	//DWT_Delay_Init();
 	//Set GPIO Ports and Pins data
 	STM32_Test_Board.Display_16x2.Port_RS_And_EN = Port_RS_EN;
-	STM32_Test_Board.Display_16x2.Pin_RS 		   = RS_Pin;
-	STM32_Test_Board.Display_16x2.Pin_EN 		   = EN_Pin;
-	STM32_Test_Board.Display_16x2.Port_LSB 	   = Port_0_3;
-	STM32_Test_Board.Display_16x2.D0_Pin 		   = D0_Pin;
-	STM32_Test_Board.Display_16x2.D1_Pin 		   = D1_Pin;
-	STM32_Test_Board.Display_16x2.D2_Pin 		   = D2_Pin;
-	STM32_Test_Board.Display_16x2.D3_Pin 		   = D3_Pin;
+	STM32_Test_Board.Display_16x2.Pin_RS 		 = RS_Pin;
+	STM32_Test_Board.Display_16x2.Pin_EN 		 = EN_Pin;
+	STM32_Test_Board.Display_16x2.Port_LSB 	     = Port_0_3;
+	STM32_Test_Board.Display_16x2.D0_Pin 		 = D0_Pin;
+	STM32_Test_Board.Display_16x2.D1_Pin 		 = D1_Pin;
+	STM32_Test_Board.Display_16x2.D2_Pin 		 = D2_Pin;
+	STM32_Test_Board.Display_16x2.D3_Pin 		 = D3_Pin;
 	STM32_Test_Board.Display_16x2.Port_MSB       = Port_4_7;
 	STM32_Test_Board.Display_16x2.D4_Pin         = D4_Pin;
 	STM32_Test_Board.Display_16x2.D5_Pin         = D5_Pin;
@@ -170,21 +157,20 @@ void Display_16x2_Init_8_bits(
 
 	//Initializes LCD
 	//1. Wait at least 15ms
-	HAL_Delay(20);
+	Delay_ms(20);
 	//2. Attentions sequence
 	Display_16x2_Write_Command(0x30);
-	HAL_Delay(5);
+	Delay_ms(5);
 	Display_16x2_Write_Command(0x30);
-	HAL_Delay(1);
+	Delay_ms(1);
 	Display_16x2_Write_Command(0x30);
-	HAL_Delay(1);
+	Delay_ms(1);
 	//3. Function set; Enable 2 lines, Data length to 8 bits
 	Display_16x2_Write_Command(DISPLAY_16x2_FUNCTION_SET | DISPLAY_16x2_FUNCTION_N | DISPLAY_16x2_FUNCTION_DL);
 	//4. Display control (Display ON, Cursor ON, blink cursor)
 	Display_16x2_Write_Command(DISPLAY_16x2_CONTROL | DISPLAY_16x2_DISPLAY_B | DISPLAY_16x2_DISPLAY_C | DISPLAY_16x2_DISPLAY_D);
 	//5. Clear LCD and return home
-	Display_16x2_Write_Command(DISPLAY_16x2_CLEAR);
-	HAL_Delay(2);
+	Delay_ms(2);
 }
 
 /**
@@ -199,8 +185,8 @@ void Display_16x2_Init_4_Bits(
 	//DWT_Delay_Init();
 	//Set GPIO Ports and Pins data
 	STM32_Test_Board.Display_16x2.Port_RS_And_EN = Port_RS_EN;
-	STM32_Test_Board.Display_16x2.Pin_RS 		   = RS_Pin;
-	STM32_Test_Board.Display_16x2.Pin_EN 		   = EN_Pin;
+	STM32_Test_Board.Display_16x2.Pin_RS 		 = RS_Pin;
+	STM32_Test_Board.Display_16x2.Pin_EN 	     = EN_Pin;
 	STM32_Test_Board.Display_16x2.Port_MSB       = Port_4_7;
 	STM32_Test_Board.Display_16x2.D4_Pin         = D4_Pin;
 	STM32_Test_Board.Display_16x2.D5_Pin         = D5_Pin;
@@ -211,23 +197,23 @@ void Display_16x2_Init_4_Bits(
 
 	//Initialise LCD
 	//1. Wait at least 15ms
-	HAL_Delay(20);
+	Delay_ms(20);
 	//2. Attentions sequence
 	Display_16x2_Write_4_Bits(0x3);
-	HAL_Delay(5);
+	Delay_ms(5);
 	Display_16x2_Write_4_Bits(0x3);
-	HAL_Delay(1);
+	Delay_ms(1);
 	Display_16x2_Write_4_Bits(0x3);
-	HAL_Delay(1);
+	Delay_ms(1);
 	Display_16x2_Write_4_Bits(0x2);
-	HAL_Delay(1);
+	Delay_ms(1);
 	//4. Function set; Enable 2 lines, Data length to 4 bits
 	Display_16x2_Write_Command(DISPLAY_16x2_FUNCTION_SET | DISPLAY_16x2_FUNCTION_N);
 	//3. Display control (Display ON, Cursor ON, blink cursor)
 	Display_16x2_Write_Command(DISPLAY_16x2_CONTROL | DISPLAY_16x2_DISPLAY_B | DISPLAY_16x2_DISPLAY_C | DISPLAY_16x2_DISPLAY_D);
 	//4. Clear LCD and return home
 	Display_16x2_Write_Command(DISPLAY_16x2_CLEAR);
-	HAL_Delay(3);
+	Delay_ms(3);
 }
 
 /**
@@ -304,7 +290,7 @@ void Display_16x2_Cursor_Show(bool State)
 void Display_16x2_Clear(void)
 {
   Display_16x2_Write_Command(DISPLAY_16x2_CLEAR);
-  HAL_Delay(3);
+  Delay_ms(3);
 }
 
 /**
@@ -346,219 +332,68 @@ void Display_16x2_Shift_Left(uint8_t Offset)
 	}
 }
 
+void Display_16x2_Print_Character(char Character)
+{
+	Display_16x2_Write_Data(Character);
+}
 /**
  * @brief Print to display any datatype (e.g. lcd16x2_printf("Value1 = %.1f", 123.45))
  */
 void Display_16x2_Printf(const char* Str, ...)
 {
-  char String_Array[20];
-  va_list Args;
-  va_start(Args, Str);
-  vsprintf(String_Array, Str, Args);
-  va_end(Args);
+	//HAL_ADC_Stop_DMA(&hadc1);
+	char String_Array[20];
+	va_list Args;
+	va_start(Args, Str);
+	vsprintf(String_Array, Str, Args);
+	va_end(Args);
 
-  for(uint8_t Index = 0;  Index < strlen(String_Array) && Index < 16; Index++)
-  {
-    Display_16x2_Write_Data((uint8_t)String_Array[Index]);
-  }
-}
-
-/****************************************************************/
-/* 				FUN��O PARA INICIAR DISPLAY 16x2				*/
-/****************************************************************/
-void Display_16x2_Init(void)
-{
-	HAL_Delay(200);
-
-	Display_16x2_Clear();
-
-	ENB_LOW;
-	RS_CMD;
-
-//	Display_16x2_Send_Command(CMD_FUNCTION_SET);
-//	HAL_Delay(10);
-
-//	Display_16x2_Send_Command(CMD_FUNCTION_SET);
-//	HAL_Delay(10);
-
-//	Display_16x2_Send_Command(CMD_FUNCTION_SET_16x2);
-//	HAL_Delay(10);
-
-//	Display_16x2_Send_Command(CMD_FUNCTION_SET_16x2);
-//	HAL_Delay(10);
-
-//	Display_16x2_Clear();
-
-//	Display_16x2_Send_Command(CMD_DISPLAY_CONTROL);
-//	HAL_Delay(10);
-
-	Display_16x2_Send_Command(0x38);
-	HAL_Delay(10);
-
-	Display_16x2_Send_Command(0x06);
-	HAL_Delay(10);
-
-	Display_16x2_Send_Command(0x0C);
-	HAL_Delay(10);
-
-	Display_16x2_Send_Command(0x01);
-	HAL_Delay(2);
-
-	return;
-}
-
-/********************************************************/
-/*     FUNCTION TO SEND DATA WITH NIBBLE CONVERSION     */
-/********************************************************/
-unsigned char Display_16x2_Position(char Column, char Line)
-{
-	unsigned char Status = LCD_ERROR;
-
-	if((Column >= 0) && (Column <= 15))
+	for(uint8_t Index = 0;  Index < strlen(String_Array) && Index < 16; Index++)
 	{
-		Status = LCD_OK;
-		switch (Line)
-		{
-			case 0:
-				Display_16x2_Send_Command(Column|CMD_ADDRESS_LINE_0);
-				break;
-
-			case 1:
-				Display_16x2_Send_Command(Column|CMD_ADDRESS_LINE_1);
-				break;
-
-			default:
-				Status = LCD_ERROR;
-				break;
-		}
+		Display_16x2_Write_Data((uint8_t)String_Array[Index]);
 	}
-	return(Status);
+
+	//HAL_ADC_Start_DMA(&hadc1, &STM32_Test_Board.ADC_Peripheral.LM35.Sampled_Value, NUMBER_MONITORING_CHANNEL);
 }
 
-/****************************************************************/
-/* 		FUN��O PARA ENVIO DE DADOS COM CONVERS�O DE NIBBLE		*/
-/****************************************************************/
-void Display_16x2_Send_Nibble(unsigned char Data_Nibble)
+void Display_16x2_Print_Number(unsigned char Number)
 {
-	ENB_HIGH; // EN = 1
-	HAL_Delay(10);
+	char String[4];
+	//uint8_t Unit;
+	//uint8_t Ten;
+	//uint8_t Hundred;
 
-	HAL_GPIO_WritePin(DATA_PORT_LCD_BIT_7,DATA_LCD_BIT_7,((Data_Nibble & 0x08)!=0 ? GPIO_PIN_SET: GPIO_PIN_RESET));
-	HAL_GPIO_WritePin(DATA_PORT_LCD_BIT_6,DATA_LCD_BIT_6,((Data_Nibble & 0x04)!=0 ? GPIO_PIN_SET: GPIO_PIN_RESET));
-	HAL_GPIO_WritePin(DATA_PORT_LCD_BIT_5,DATA_LCD_BIT_5,((Data_Nibble & 0x02)!=0 ? GPIO_PIN_SET: GPIO_PIN_RESET));
-	HAL_GPIO_WritePin(DATA_PORT_LCD_BIT_4,DATA_LCD_BIT_4,((Data_Nibble & 0x01)!=0 ? GPIO_PIN_SET: GPIO_PIN_RESET));
+	//Hundred = Number / 100;
+	//Ten     = (Number % 10)/10;
+	//Unit    = (Number % 100)/10;
 
-	HAL_Delay(10);
-	ENB_LOW; // EN = 0
-	HAL_Delay(10);;
-
+	sprintf(String, "%d", Number);
+	Display_16x2_Printf(String);
 	return;
 }
 
-/****************************************************************/
-/* 		FUN��O PARA ENVIO DE DADOS PARA COMANDO DISPLAY  		*/
-/****************************************************************/
-void Display_16x2_Send_Command(unsigned char Data_Command)
-{
-	RS_CMD;
-
-	Display_16x2_Send_Nibble(Data_Command >> 4);
-	Display_16x2_Send_Nibble(Data_Command & 0x0F);
-	return;
-}
-
-/****************************************************************/
-/* 		FUN��O PARA ENVIO DE DADOS PARA DADOS DISPLAY  		    */
-/****************************************************************/
-void Display_16x2_Send_Data(unsigned char Data_Command)
-{
-	RS_DATA;
-
-	Display_16x2_Send_Nibble(Data_Command >> 4);
-	Display_16x2_Send_Nibble(Data_Command & 0x0F);
-	return;
-}
-
-/****************************************************************/
-/* 					FUN��O PARA LIMPAR O  DISPLAY  		        */
-/****************************************************************/
-//void Display_16x2_Clear(void)
+//void Display_16x2_Creates_Custom_Character(void)
 //{
-//	Display_16x2_Send_Command(CMD_CLEAR_DISPLAY);
-//	HAL_Delay(4);
-//	return;
+//	Display_16x2_Write_Command(0x04);
+//	Display_16x2_Write_Command(0x00);
+
+//	for(STM32_Test_Board.Display_16x2.Index = 0; STM32_Test_Board.Display_16x2.Index <= TOTAL_CHARACTER; STM32_Test_Board.Display_16x2.Index++)
+//	{
+//		Display_16x2_Write_Data((char)Display_16x2_Custom_Character_5x8[STM32_Test_Board.Display_16x2.Index]);
+//	}
+
+//	Display_16x2_Write_Command(0);
+//	Display_16x2_Write_Command(2);
 //}
 
-/********************************************************/
-/*     FUNCTION TO RETURN THE ORIGINAL POSITION         */
-/********************************************************/
-void Display_16x2_Return_Home(void)
+void Display_16x2_Creates_Custom_Character(unsigned char *Pattern, uint8_t Address)
 {
-	Display_16x2_Send_Command(CMD_CURSOR_HOME);
-	HAL_Delay(4);
-	return;
-}
+	STM32_Test_Board.Display_16x2.Index = 0;
 
-/********************************************************/
-/* 		FUNCTION TO SEND DATA TO LCD TEXT               */
-/********************************************************/
-void Display_16x2_Write_Text(char *Text_LCD)
-{
-	while(*Text_LCD)
+	Display_16x2_Write_Command(0x40 + (Address * 8));
+
+	for(STM32_Test_Board.Display_16x2.Index = 0; STM32_Test_Board.Display_16x2.Index < TOTAL_PIXEL; STM32_Test_Board.Display_16x2.Index++)
 	{
-		Display_16x2_Send_Data(*Text_LCD++);
+		Display_16x2_Write_Data(Pattern[STM32_Test_Board.Display_16x2.Index]);
 	}
-}
-
-void Display_16x2_All_High(void)
-{
-	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4 ,GPIO_PIN_SET);
-	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_5 ,GPIO_PIN_SET);
-	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_0,GPIO_PIN_SET);
-	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1,GPIO_PIN_SET);
-	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2,GPIO_PIN_SET);
-	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_3,GPIO_PIN_SET);
-}
-
-void Display_16x2_All_Low(void)
-{
-	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4,GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_5,GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_0,GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_1,GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2,GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_3,GPIO_PIN_RESET);
-}
-
-/**********************/
-/* 				FUN��O PARA POSI��O XY DO TEXTO DISPLAY		    */
-/**********************/
-void Display_16x2_Write_Text_Position(char *Text_LCD_Position,unsigned char Column, unsigned char Line)
-{
-	if(Display_16x2_Position(Column, Line))
-	{
-		Display_16x2_Write_Text(Text_LCD_Position);
-	}
-	return;
-}
-
-/**********************/
-/* 				FUN��O PARA HABILITAR OU DESABILITAR O CURSOR		    */
-/**********************/
-void Display_16x2_Disable_Cursor(void)
-{
-	Display_16x2_Send_Command(CMD_DISABLE_CURSOR);
-}
-
-void Display_16x2_Enable_Cursor(void)
-{
-	Display_16x2_Send_Command(CMD_DISPLAY_CONTROL);
-}
-
-void Display_16x2_Write_Number_Char(unsigned char Number)
-{
-	Display_16x2_Send_Data(Number >= 100 ?(((Number/100)%10)+'0'):' ');
-	Display_16x2_Send_Data((Number >= 100)?(((Number/10)%10)+'0'):(((Number/10)%10))>0?(((Number/10)%10)+'0'):' ');
-	Display_16x2_Send_Data(((Number%10)+'0'));
-	return;
 }

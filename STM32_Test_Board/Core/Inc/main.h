@@ -57,10 +57,10 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define LM35_IN_Pin GPIO_PIN_0
-#define LM35_IN_GPIO_Port GPIOA
-#define POT_IN_Pin GPIO_PIN_1
-#define POT_IN_GPIO_Port GPIOA
+#define POT_INPUT_Pin GPIO_PIN_0
+#define POT_INPUT_GPIO_Port GPIOA
+#define LM35_INPUT_Pin GPIO_PIN_1
+#define LM35_INPUT_GPIO_Port GPIOA
 #define BUTTON_FIVE_Pin GPIO_PIN_5
 #define BUTTON_FIVE_GPIO_Port GPIOC
 #define BUTTON_FIVE_EXTI_IRQn EXTI4_15_IRQn
@@ -86,6 +86,8 @@ void Error_Handler(void);
 #define LED_RED_B_GPIO_Port GPIOA
 #define LED_GREEN_Pin GPIO_PIN_6
 #define LED_GREEN_GPIO_Port GPIOC
+#define TEST_TIMER_7_Pin GPIO_PIN_8
+#define TEST_TIMER_7_GPIO_Port GPIOC
 #define DISP_D4_Pin GPIO_PIN_0
 #define DISP_D4_GPIO_Port GPIOD
 #define DISP_D5_Pin GPIO_PIN_1

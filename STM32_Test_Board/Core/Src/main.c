@@ -17,6 +17,10 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
+#include "main.h"
+#include "adc.h"
+#include "tim.h"
+#include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -60,7 +64,13 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		if(STM32_Test_Board.Timer_Generico > 0) STM32_Test_Board.Timer_Generico --;
 		if(STM32_Test_Board.GPIO_Input.Timers.Generic > 0) STM32_Test_Board.GPIO_Input.Timers.Generic--;
 		if(STM32_Test_Board.GPIO_Input.Timers.Timer_Hold_Buttons > 0) STM32_Test_Board.GPIO_Input.Timers.Timer_Hold_Buttons--;
-		LED_RED_B_TOGGLE_STATE;
+		if(STM32_Test_Board.ADC_Peripheral.LM35.Counter_Update > 0) STM32_Test_Board.ADC_Peripheral.LM35.Counter_Update--;
+		else
+		{
+			STM32_Test_Board.ADC_Peripheral.LM35.Update = true;
+			STM32_Test_Board.ADC_Peripheral.LM35.Counter_Update = TIMER_UPDATE_ADC_VALUE;
+			LED_RED_B_TOGGLE_STATE;
+		}
 	}
 
 	if(htim->Instance == TIM6) // Timer for General Functions
@@ -108,10 +118,13 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_TIM3_Init();
-  MX_DMA_Init();
   MX_TIM6_Init();
+  MX_TIM7_Init();
   MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
+
+  ADC_Peripheral_Init();
+
 
   /* USER CODE END 2 */
 
@@ -123,6 +136,13 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 	  STM32_Test_Board_Main();
+	  //HAL_GPIO_TogglePin(TEST_TIMER_7_GPIO_Port, TEST_TIMER_7_Pin);
+	  //Delay_us(10);
+  	//HAL_ADC_Start(&hadc1);
+  	//HAL_ADC_PollForConversion(&hadc1, 1); // Poll ADC1 Perihperal & TimeOut = 1mSec
+  	//STM32_Test_Board.ADC_Peripheral.LM35.Sampled_Value = HAL_ADC_GetValue(&hadc1);
+  	//HAL_Delay(1);
+
   }
   /* USER CODE END 3 */
 }
@@ -149,10 +169,10 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
   RCC_OscInitStruct.PLL.PLLM = RCC_PLLM_DIV1;
-  RCC_OscInitStruct.PLL.PLLN = 8;
+  RCC_OscInitStruct.PLL.PLLN = 9;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
   RCC_OscInitStruct.PLL.PLLQ = RCC_PLLQ_DIV2;
-  RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV2;
+  RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV3;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -165,7 +185,7 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
   {
     Error_Handler();
   }

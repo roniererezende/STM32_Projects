@@ -14,19 +14,21 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdarg.h>
+#include <STM32_Test_Board/ADC_Peripheral.h>
 
 #include "main.h"
 #include "stm32g071xx.h"
 #include "adc.h"
-#include "dma.h"
+#include "stm32g0xx_hal_adc.h"
+//#include "dma.h"
 #include "tim.h"
 #include "gpio.h"
 #include "stm32g0xx_it.h"
 
 #include "GPIO_Output.h"
 #include "GPIO_Input.h"
-#include "ADC_Peripheral.h"
 #include "Display_16x2.h"
+#include "Delay.h"
 
 /* STM32 Test Board State Machine */
 typedef enum E_STM32_Test_Board_States
