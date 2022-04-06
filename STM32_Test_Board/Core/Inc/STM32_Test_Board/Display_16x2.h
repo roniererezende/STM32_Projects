@@ -148,7 +148,9 @@ void Display_16x2_Shift_Left(uint8_t Offset);
 void Display_16x2_Printf(const char* Str, ...);
 
 
-void Display_16x2_Print_Number(unsigned char Number);
+void Display_16x2_Print_Integer_Number(unsigned char Number);
+
+void Display_16x2_Print_Float_Number(float Number, uint8_t Row, uint8_t Column);
 
 void Display_16x2_Creates_Custom_Character(unsigned char *Pattern, uint8_t Address);
 

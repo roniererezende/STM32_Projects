@@ -356,35 +356,46 @@ void Display_16x2_Printf(const char* Str, ...)
 	//HAL_ADC_Start_DMA(&hadc1, &STM32_Test_Board.ADC_Peripheral.LM35.Sampled_Value, NUMBER_MONITORING_CHANNEL);
 }
 
-void Display_16x2_Print_Number(unsigned char Number)
+void Display_16x2_Print_Integer_Number(unsigned char Number)
 {
 	char String[4];
-	//uint8_t Unit;
-	//uint8_t Ten;
-	//uint8_t Hundred;
-
-	//Hundred = Number / 100;
-	//Ten     = (Number % 10)/10;
-	//Unit    = (Number % 100)/10;
 
 	sprintf(String, "%d", Number);
 	Display_16x2_Printf(String);
 	return;
 }
 
-//void Display_16x2_Creates_Custom_Character(void)
-//{
-//	Display_16x2_Write_Command(0x04);
-//	Display_16x2_Write_Command(0x00);
+void Display_16x2_Print_Float_Number(float Number, uint8_t Row, uint8_t Column)
+{
+	uint16_t Millivolt = Number * 1000;
+	uint8_t Unit       = 0;
+	uint8_t Hundreth   = 0;
+	uint8_t Tenth      = 0;
 
-//	for(STM32_Test_Board.Display_16x2.Index = 0; STM32_Test_Board.Display_16x2.Index <= TOTAL_CHARACTER; STM32_Test_Board.Display_16x2.Index++)
-//	{
-//		Display_16x2_Write_Data((char)Display_16x2_Custom_Character_5x8[STM32_Test_Board.Display_16x2.Index]);
-//	}
+	if(Number >= 1.0)
+	{
+		Unit = Millivolt / 1000;
+		Hundreth = (Millivolt % 1000) / 100;
+		Tenth = ((Millivolt % 1000) % 100) / 10;
+	}
+	else
+	{
+		Unit = 0;
+		Hundreth = (Millivolt % 1000) / 100;
+		Tenth = ((Millivolt % 1000) % 100) / 10;
+	}
 
-//	Display_16x2_Write_Command(0);
-//	Display_16x2_Write_Command(2);
-//}
+	Display_16x2_Set_Cursor(Row,Column);
+	Display_16x2_Print_Integer_Number(Unit);
+	Display_16x2_Set_Cursor(Row,Column + 1);
+	Display_16x2_Print_Character('.');
+	Display_16x2_Set_Cursor(Row,Column + 2);
+	Display_16x2_Print_Integer_Number(Hundreth);
+	Display_16x2_Set_Cursor(Row,Column + 3);
+	Display_16x2_Print_Integer_Number(Tenth);
+
+
+}
 
 void Display_16x2_Creates_Custom_Character(unsigned char *Pattern, uint8_t Address)
 {

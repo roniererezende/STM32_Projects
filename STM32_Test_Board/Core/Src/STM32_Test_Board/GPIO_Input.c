@@ -181,6 +181,21 @@ void GPIO_Input_Process_Button_One(void)
  	if(STM32_Test_Board.GPIO_Input.Button_One.Behavior == Button_Clicked)
 	{
 		LED_LIGHT_TOGGLE_STATE;
+
+		if(STM32_Test_Board.Show_Data == e_Temperature)
+		{
+			STM32_Test_Board.Navegation.Current_Screen = Screen_Potenciometer;
+			STM32_Test_Board.Show_Data = e_Potenciometer;
+
+			STM32_Test_Board.Navegation.Should_Mount_Screen = true;
+		}
+		else if(STM32_Test_Board.Show_Data == e_Potenciometer)
+		{
+			STM32_Test_Board.Navegation.Current_Screen = Screen_Temperature;
+			STM32_Test_Board.Show_Data = e_Temperature;
+
+			STM32_Test_Board.Navegation.Should_Mount_Screen = true;
+		}
 	}
 //	else
 //	{

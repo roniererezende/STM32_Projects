@@ -64,11 +64,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		if(STM32_Test_Board.Timer_Generico > 0) STM32_Test_Board.Timer_Generico --;
 		if(STM32_Test_Board.GPIO_Input.Timers.Generic > 0) STM32_Test_Board.GPIO_Input.Timers.Generic--;
 		if(STM32_Test_Board.GPIO_Input.Timers.Timer_Hold_Buttons > 0) STM32_Test_Board.GPIO_Input.Timers.Timer_Hold_Buttons--;
-		if(STM32_Test_Board.ADC_Peripheral.LM35.Counter_Update > 0) STM32_Test_Board.ADC_Peripheral.LM35.Counter_Update--;
+		if(STM32_Test_Board.ADC_Peripheral.Counter_Update > 0) STM32_Test_Board.ADC_Peripheral.Counter_Update--;
 		else
 		{
-			STM32_Test_Board.ADC_Peripheral.LM35.Update = true;
-			STM32_Test_Board.ADC_Peripheral.LM35.Counter_Update = TIMER_UPDATE_ADC_VALUE;
+			STM32_Test_Board.ADC_Peripheral.Update = true;
 			LED_RED_B_TOGGLE_STATE;
 		}
 	}
