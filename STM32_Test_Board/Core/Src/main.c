@@ -19,7 +19,9 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
+#include "dma.h"
 #include "tim.h"
+#include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -70,6 +72,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			STM32_Test_Board.ADC_Peripheral.Update = true;
 			LED_RED_B_TOGGLE_STATE;
 		}
+		if(STM32_Test_Board.USART_Peripheral.Time_Transmit > 0) STM32_Test_Board.USART_Peripheral.Time_Transmit--;
+		else
+		{
+			STM32_Test_Board.USART_Peripheral.Transmit_Enable = true;
+		}
 	}
 
 	if(htim->Instance == TIM6) // Timer for General Functions
@@ -80,9 +87,28 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)
 {
-	if(GPIO_Pin == GPIO_PIN_5)
+	if(GPIO_Pin == GPIO_PIN_10)
 	{
-		LED_BLUE_B_TOGGLE_STATE;
+		LED_RED_A_TOGGLE_STATE;
+	}
+}
+
+//void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+//{
+//	HAL_UART_Receive_IT(&huart2, (uint8_t*)STM32_Test_Board.USART_Peripheral.Received_Data_Buffer_Main, USART_MAXIMUM_NUMBER_BITS_DATA_RECEIVE);
+//	strcpy((char *)STM32_Test_Board.USART_Peripheral.Received_Data_Buffer, (char *)STM32_Test_Board.USART_Peripheral.Received_Data_Buffer_Main);
+//	memset(STM32_Test_Board.USART_Peripheral.Received_Data_Buffer_Main,'\0', USART_MAXIMUM_NUMBER_BITS_DATA_RECEIVE);
+//}
+
+void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
+{
+	if(huart->Instance == USART2)
+	{
+		memcpy(STM32_Test_Board.USART_Peripheral.Received_Data_Buffer_Main, STM32_Test_Board.Screen.Buffer, USART_MAXIMUM_NUMBER_BITS_DATA_RECEIVE);
+
+		HAL_UARTEx_ReceiveToIdle_DMA(&huart2, STM32_Test_Board.Screen.Buffer, USART_MAXIMUM_NUMBER_BITS_DATA_RECEIVE);
+
+		__HAL_DMA_DISABLE_IT(&hdma_usart2_rx, DMA_IT_HT);
 	}
 }
 
@@ -119,10 +145,12 @@ int main(void)
   MX_TIM3_Init();
   MX_TIM6_Init();
   MX_TIM7_Init();
+  MX_DMA_Init();
+  MX_USART2_UART_Init();
   MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
 
-  ADC_Peripheral_Init();
+  //ADC_Peripheral_Init();
 
 
   /* USER CODE END 2 */
@@ -135,12 +163,6 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 	  STM32_Test_Board_Main();
-	  //HAL_GPIO_TogglePin(TEST_TIMER_7_GPIO_Port, TEST_TIMER_7_Pin);
-	  //Delay_us(10);
-  	//HAL_ADC_Start(&hadc1);
-  	//HAL_ADC_PollForConversion(&hadc1, 1); // Poll ADC1 Perihperal & TimeOut = 1mSec
-  	//STM32_Test_Board.ADC_Peripheral.LM35.Sampled_Value = HAL_ADC_GetValue(&hadc1);
-  	//HAL_Delay(1);
 
   }
   /* USER CODE END 3 */

@@ -5,16 +5,23 @@
  *      Author: Roniere
  */
 
+
 #ifndef INC_STM32_TEST_BOARD_SCREEN_H_
 #define INC_STM32_TEST_BOARD_SCREEN_H_
 
-typedef enum e_Screen
+#include "../Inc/STM32_Test_Board/STM32_Test_Board.h"
+
+#define SCREEN_MAXIMUM_BYTE_NUMBER 20
+
+
+typedef struct s_Screen
 {
-	Screen_Temperature   = 0,
-	Screen_Potenciometer = 1
-}e_Screen;
+	uint8_t Index_Buffer_Screen;
+	uint8_t Buffer[SCREEN_MAXIMUM_BYTE_NUMBER];
+}s_Screen;
 
 void Screen_Mount_Temperature(void);
 void Screen_Mount_Potenciometer(void);
+void Screen_Mount_Serial_Data(void);
 
 #endif /* INC_STM32_TEST_BOARD_SCREEN_H_ */

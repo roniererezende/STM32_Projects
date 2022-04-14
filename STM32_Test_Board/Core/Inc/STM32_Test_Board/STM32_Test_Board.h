@@ -17,20 +17,21 @@
 #include <STM32_Test_Board/ADC_Peripheral.h>
 
 #include "main.h"
-#include "stm32g071xx.h"
 #include "adc.h"
-#include "stm32g0xx_hal_adc.h"
-//#include "dma.h"
+#include "dma.h"
 #include "tim.h"
+#include "usart.h"
 #include "gpio.h"
 #include "stm32g0xx_it.h"
 
 #include "GPIO_Output.h"
 #include "GPIO_Input.h"
 #include "Display_16x2.h"
+#include "ADC_Peripheral.h"
 #include "Delay.h"
 #include "Screen.h"
 #include "Navegation.h"
+#include "USART_Peripheral.h"
 
 /* STM32 Test Board State Machine */
 typedef enum E_STM32_Test_Board_States
@@ -42,7 +43,8 @@ typedef enum E_STM32_Test_Board_States
 typedef enum e_STM32_Test_Board_Show_Data
 {
 	e_Temperature   = 0,
-	e_Potenciometer = 1
+	e_Potenciometer = 1,
+	e_Serial_Data   = 2
 }e_STM32_Test_Board_Show_Data;
 
 /* Main Project Structure */
@@ -56,6 +58,8 @@ typedef struct s_STM32_Test_Board
 	s_ADC_Peripheral ADC_Peripheral;
 	s_Display_16x2 Display_16x2;
 	s_Navegation Navegation;
+	s_USART_Peripheral USART_Peripheral;
+	s_Screen Screen;
 
 	uint16_t Timer_Generico;
 }s_STM32_Test_Board;

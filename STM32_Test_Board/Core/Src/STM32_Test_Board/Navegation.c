@@ -20,5 +20,9 @@ void Navegation_Processing(void)
 		case Screen_Potenciometer:
 			Screen_Mount_Potenciometer();
 		break;
+
+		case Screen_Serial_Data:
+			Screen_Mount_Serial_Data();
+		break;
 	}
 }

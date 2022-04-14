@@ -182,19 +182,37 @@ void GPIO_Input_Process_Button_One(void)
 	{
 		LED_LIGHT_TOGGLE_STATE;
 
-		if(STM32_Test_Board.Show_Data == e_Temperature)
+		if(STM32_Test_Board.Show_Data < 3)
 		{
-			STM32_Test_Board.Navegation.Current_Screen = Screen_Potenciometer;
-			STM32_Test_Board.Show_Data = e_Potenciometer;
-
-			STM32_Test_Board.Navegation.Should_Mount_Screen = true;
+			STM32_Test_Board.Show_Data++;
 		}
-		else if(STM32_Test_Board.Show_Data == e_Potenciometer)
+		else
 		{
-			STM32_Test_Board.Navegation.Current_Screen = Screen_Temperature;
 			STM32_Test_Board.Show_Data = e_Temperature;
+		}
 
-			STM32_Test_Board.Navegation.Should_Mount_Screen = true;
+		switch(STM32_Test_Board.Show_Data)
+		{
+			case e_Temperature:
+				STM32_Test_Board.Navegation.Current_Screen = Screen_Potenciometer;
+				STM32_Test_Board.Show_Data = e_Potenciometer;
+
+				STM32_Test_Board.Navegation.Should_Mount_Screen = true;
+			break;
+
+			case e_Potenciometer:
+				STM32_Test_Board.Navegation.Current_Screen = Screen_Temperature;
+				STM32_Test_Board.Show_Data = e_Serial_Data;
+
+				STM32_Test_Board.Navegation.Should_Mount_Screen = true;
+			break;
+
+			case e_Serial_Data:
+				STM32_Test_Board.Navegation.Current_Screen = Screen_Serial_Data;
+				STM32_Test_Board.Show_Data = e_Temperature;
+
+				STM32_Test_Board.Navegation.Should_Mount_Screen = true;
+			break;
 		}
 	}
 //	else
@@ -231,7 +249,7 @@ void GPIO_Input_Process_Button_Four(void)
 {
 	if(STM32_Test_Board.GPIO_Input.Button_Four.Behavior == Button_Clicked)
 	{
-		LED_RED_A_TOGGLE_STATE;
+		LED_BLUE_B_TOGGLE_STATE;
 	}
 //	else
 //	{
