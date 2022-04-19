@@ -25,10 +25,16 @@ void USART_Peripheral_Transmit_Data(uint8_t *Transmit_Data)
 			strcat((char*)Transmit_Data_Type, (char*)Transmit_Data);
 		}
 
+		HAL_TIM_Base_Stop_IT(&htim3); // Starts timer for General Functions
+		HAL_TIM_Base_Stop_IT(&htim6); // Starts timer for General Functions
+
 		if(HAL_UART_Transmit(&huart2, (uint8_t*)Transmit_Data_Type, (uint16_t)(strlen((const char*)Transmit_Data_Type) + 1), 1000) != HAL_OK)
 		{
 			Error_Handler();
 		}
+
+		HAL_TIM_Base_Start_IT(&htim3); // Starts timer for General Functions
+		HAL_TIM_Base_Start_IT(&htim6); // Starts timer for General Functions
 
 		STM32_Test_Board.USART_Peripheral.Transmit_Enable = false;
 		STM32_Test_Board.USART_Peripheral.Time_Transmit = USART_TIME_TRANSMIT;
@@ -63,7 +69,11 @@ void USART_Peripheral_Transmit_Receive(void)
 
 	USART_Peripheral_Transmit_Data((uint8_t*)Buffer_Transmit);
 
-
+//	if(STM32_Test_Board.USART_Peripheral.Clear == true)
+//	{
+//		memcpy(&STM32_Test_Board.USART_Peripheral.Received_Data_Buffer_Main,"\0", sizeof(uint8_t));
+//		STM32_Test_Board.USART_Peripheral.Clear = false;
+//	}
 	//while(STM32_Test_Board.USART_Peripheral.Received_Data_Buffer[STM32_Test_Board.USART_Peripheral.Index_Received_Data] != '\0')
 	//{
 	//	STM32_Test_Board.USART_Peripheral.Index_Received_Data++;

@@ -38,8 +38,8 @@ void STM32_Test_Board_Initialization(void)
 	HAL_TIM_Base_Start_IT(&htim6); // Starts timer for General Functions
 	HAL_TIM_Base_Start(&htim7);
 
-//	HAL_UART_Receive_IT (&huart2, &STM32_Test_Board.USART_Peripheral.Received_Data_Buffer, USART_MAXIMUM_NUMBER_BITS_DATA_RECEIVE);
-//	HAL_UART_Receive_DMA(&huart2, STM32_Test_Board.USART_Peripheral.Received_Data_Buffer, USART_MAXIMUM_NUMBER_BITS_DATA_RECEIVE);
+	//HAL_UART_Receive_IT (&huart2, (uint8_t *)&STM32_Test_Board.USART_Peripheral.Received_Data_Buffer_Main, USART_MAXIMUM_NUMBER_BITS_DATA_RECEIVE);
+	//HAL_UART_Receive_DMA(&huart2, STM32_Test_Board.USART_Peripheral.Received_Data_Buffer_Main, USART_MAXIMUM_NUMBER_BITS_DATA_RECEIVE);
 	HAL_UARTEx_ReceiveToIdle_DMA(&huart2, STM32_Test_Board.Screen.Buffer, USART_MAXIMUM_NUMBER_BITS_DATA_RECEIVE);
 
 	__HAL_DMA_DISABLE_IT(&hdma_usart2_rx, DMA_IT_HT);
@@ -91,12 +91,16 @@ void STM32_Test_Board_Update_Data(void)
 		break;
 
 		case e_Serial_Data:
-			if(STM32_Test_Board.ADC_Peripheral.Update == true)
+			if(STM32_Test_Board.USART_Peripheral.Clear == true)
 			{
-				Display_16x2_Set_Cursor(1, 12);
-				Display_16x2_Printf(&STM32_Test_Board.Screen.Buffer);
+				Display_16x2_Set_Cursor(1, 7);
+				Display_16x2_Printf("        ");
+				Display_16x2_Set_Cursor(1, 7);
+				Display_16x2_Printf((char*)&STM32_Test_Board.Screen.Buffer);
 
-				STM32_Test_Board.ADC_Peripheral.Update = false;
+				memset(STM32_Test_Board.Screen.Buffer, 0, USART_MAXIMUM_NUMBER_BITS_DATA_RECEIVE);
+
+				STM32_Test_Board.USART_Peripheral.Clear = false;
 			}
 
 		break;

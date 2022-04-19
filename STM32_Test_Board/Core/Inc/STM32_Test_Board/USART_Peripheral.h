@@ -10,9 +10,9 @@
 
 /* Defines */
 
-#define USART_MAXIMUM_NUMBER_BITS_DATA_TRANSMIT	 50
-#define USART_MAXIMUM_NUMBER_BITS_DATA_RECEIVE	 20
-#define USART_TIME_TRANSMIT            5000
+#define USART_MAXIMUM_NUMBER_BITS_DATA_TRANSMIT	   50
+#define USART_MAXIMUM_NUMBER_BITS_DATA_RECEIVE	   20
+#define USART_TIME_TRANSMIT                      5000
 
 /* USART Structure*/
 typedef struct s_USART_Peripheral
@@ -23,6 +23,8 @@ typedef struct s_USART_Peripheral
 	uint8_t Received_Data_Buffer_Main[USART_MAXIMUM_NUMBER_BITS_DATA_RECEIVE];
 	//uint8_t Received_Data_Buffer[USART_MAXIMUM_NUMBER_BITS_DATA_RECEIVE];
 	uint8_t Index_Received_Data;
+
+	_Bool Clear;
 }s_USART_Peripheral;
 
 /* Function Prototype */
