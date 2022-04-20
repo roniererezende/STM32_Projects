@@ -57,6 +57,8 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define PMW_OUT_Pin GPIO_PIN_12
+#define PMW_OUT_GPIO_Port GPIOC
 #define POT_INPUT_Pin GPIO_PIN_0
 #define POT_INPUT_GPIO_Port GPIOA
 #define LM35_INPUT_Pin GPIO_PIN_1

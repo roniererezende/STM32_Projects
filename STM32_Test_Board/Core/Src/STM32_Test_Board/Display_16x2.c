@@ -9,7 +9,7 @@
 
 unsigned char Display_16x2_Custom_Character_5x8[] = {
   0b00000,0b01110,0b01010,0b01110,0b00000,0b00000,0b00000,0b00000, // Code for CGRAM memory space 1
-  0b10000,0b01000,0b00100,0b00010,0b00001,0b00010,0b00100,0b01000, // Code for CGRAM memory space 2
+  0b11000,0b11001,0b00010,0b00100,0b01000,0b10000,0b00111,0b01011, // Code for CGRAM memory space 2
   0b00000,0b00000,0b00000,0b00000,0b00000,0b00000,0b00000,0b00000, // Code for CGRAM memory space 3
   0b00000,0b00000,0b00000,0b00000,0b00000,0b00000,0b00000,0b00000, // Code for CGRAM memory space 4
   0b00000,0b00000,0b00000,0b00000,0b00000,0b00000,0b00000,0b00000, // Code for CGRAM memory space 5
@@ -27,6 +27,7 @@ void Display_16x2_Init(void)
 
 	Display_16x2_Init_4_Bits(GPIOD, DISP_RS_Pin, DISP_EN_Pin, GPIOD, DISP_D4_Pin, DISP_D5_Pin, DISP_D6_Pin, DISP_D7_Pin);
 	Display_16x2_Creates_Custom_Character(&Display_16x2_Custom_Character_5x8[0],0);
+	Display_16x2_Creates_Custom_Character(&Display_16x2_Custom_Character_5x8[1],1);
 	Display_16x2_Cursor_Show(false);
 	Display_16x2_Clear();
 }

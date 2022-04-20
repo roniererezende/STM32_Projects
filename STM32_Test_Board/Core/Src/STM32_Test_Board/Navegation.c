@@ -24,5 +24,9 @@ void Navegation_Processing(void)
 		case Screen_Serial_Data:
 			Screen_Mount_Serial_Data();
 		break;
+
+		case Screen_PWM:
+			Screen_Mount_PWM();
+		break;
 	}
 }

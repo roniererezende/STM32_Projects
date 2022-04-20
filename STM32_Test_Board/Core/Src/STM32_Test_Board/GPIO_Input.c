@@ -182,7 +182,7 @@ void GPIO_Input_Process_Button_One(void)
 	{
 		LED_LIGHT_TOGGLE_STATE;
 
-		if(STM32_Test_Board.Show_Data < 2)
+		if(STM32_Test_Board.Show_Data < 3)
 		{
 			STM32_Test_Board.Show_Data++;
 		}
@@ -213,6 +213,13 @@ void GPIO_Input_Process_Button_One(void)
 
 				STM32_Test_Board.Navegation.Should_Mount_Screen = true;
 			break;
+
+			case e_PWM:
+				STM32_Test_Board.Navegation.Current_Screen = Screen_PWM;
+
+				STM32_Test_Board.Navegation.Should_Mount_Screen = true;
+				STM32_Test_Board.PWM_Output.Update = true;
+			break;
 		}
 	}
 //	else
@@ -226,11 +233,14 @@ void GPIO_Input_Process_Button_Two(void)
 	if(STM32_Test_Board.GPIO_Input.Button_Two.Behavior == Button_Clicked)
 	{
 		LED_YELLOW_TOGGLE_STATE;
+
+		if((STM32_Test_Board.Navegation.Current_Screen == Screen_PWM) && (STM32_Test_Board.PWM_Output.Value >= 50) && (STM32_Test_Board.PWM_Output.Value < 1000))
+		{
+			STM32_Test_Board.PWM_Output.Value += 50;
+			STM32_Test_Board.PWM_Output.Printed_Value = (STM32_Test_Board.PWM_Output.Value *100 / 1000);
+			STM32_Test_Board.PWM_Output.Update = true;
+		}
 	}
-//	else
-//	{
-//		LED_YELLOW_TOGGLE_STATE;
-//	}
 }
 
 void GPIO_Input_Process_Button_Three(void)
@@ -238,11 +248,14 @@ void GPIO_Input_Process_Button_Three(void)
 	if(STM32_Test_Board.GPIO_Input.Button_Three.Behavior == Button_Clicked)
 	{
 		LED_BLUE_A_TOGGLE_STATE;
+
+		if((STM32_Test_Board.Navegation.Current_Screen == Screen_PWM) && (STM32_Test_Board.PWM_Output.Value > 50) && (STM32_Test_Board.PWM_Output.Value <=  1000))
+		{
+			STM32_Test_Board.PWM_Output.Value -= 50;
+			STM32_Test_Board.PWM_Output.Printed_Value = (STM32_Test_Board.PWM_Output.Value * 100 / 1000);
+			STM32_Test_Board.PWM_Output.Update = true;
+		}
 	}
-//	else
-//	{
-//		LED_BLUE_A_TOGGLE_STATE;
-//	}
 }
 
 void GPIO_Input_Process_Button_Four(void)

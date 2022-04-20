@@ -34,16 +34,19 @@ void STM32_Test_Board_Main(void)
 
 void STM32_Test_Board_Initialization(void)
 {
+	STM32_Test_Board.PWM_Output.Value = 5;
+
 	HAL_TIM_Base_Start_IT(&htim3); // Starts timer for General Functions
 	HAL_TIM_Base_Start_IT(&htim6); // Starts timer for General Functions
 	HAL_TIM_Base_Start(&htim7);
 
-	//HAL_UART_Receive_IT (&huart2, (uint8_t *)&STM32_Test_Board.USART_Peripheral.Received_Data_Buffer_Main, USART_MAXIMUM_NUMBER_BITS_DATA_RECEIVE);
-	//HAL_UART_Receive_DMA(&huart2, STM32_Test_Board.USART_Peripheral.Received_Data_Buffer_Main, USART_MAXIMUM_NUMBER_BITS_DATA_RECEIVE);
+
+
 	HAL_UARTEx_ReceiveToIdle_DMA(&huart2, STM32_Test_Board.Screen.Buffer, USART_MAXIMUM_NUMBER_BITS_DATA_RECEIVE);
 
 	__HAL_DMA_DISABLE_IT(&hdma_usart2_rx, DMA_IT_HT);
 
+	PWM_Output_Init();
 
 	GPIO_Input_Init();
 
@@ -58,6 +61,8 @@ void STM32_Test_Board_Initialization(void)
 
 	STM32_Test_Board.USART_Peripheral.Time_Transmit = USART_TIME_TRANSMIT;
 	STM32_Test_Board.USART_Peripheral.Transmit_Enable = true;
+
+	STM32_Test_Board.PWM_Output.Update = true;
 }
 
 void STM32_Test_Board_Execution(void)
@@ -97,12 +102,24 @@ void STM32_Test_Board_Update_Data(void)
 				Display_16x2_Printf("        ");
 				Display_16x2_Set_Cursor(1, 7);
 				Display_16x2_Printf((char*)&STM32_Test_Board.Screen.Buffer);
+				strcpy((char*)STM32_Test_Board.Screen.Previous_Buffer, (char*)STM32_Test_Board.Screen.Buffer);
 
 				memset(STM32_Test_Board.Screen.Buffer, 0, USART_MAXIMUM_NUMBER_BITS_DATA_RECEIVE);
 
 				STM32_Test_Board.USART_Peripheral.Clear = false;
 			}
+		break;
 
+		case e_PWM:
+			if(STM32_Test_Board.PWM_Output.Update == true)
+			{
+				TIM14->CCR1 = STM32_Test_Board.PWM_Output.Value;
+				Display_16x2_Set_Cursor(1, 9);
+				Display_16x2_Printf("   ");
+				Display_16x2_Set_Cursor(1, 9);
+				Display_16x2_Print_Integer_Number(STM32_Test_Board.PWM_Output.Printed_Value);
+				STM32_Test_Board.PWM_Output.Update = false;
+			}
 		break;
 	}
 }

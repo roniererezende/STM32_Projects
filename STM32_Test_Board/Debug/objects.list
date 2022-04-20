@@ -4,6 +4,7 @@
 "./Core/Src/STM32_Test_Board/GPIO_Input.o"
 "./Core/Src/STM32_Test_Board/GPIO_Output.o"
 "./Core/Src/STM32_Test_Board/Navegation.o"
+"./Core/Src/STM32_Test_Board/PWM_Output.o"
 "./Core/Src/STM32_Test_Board/STM32_Test_Board.o"
 "./Core/Src/STM32_Test_Board/Screen.o"
 "./Core/Src/STM32_Test_Board/USART_Peripheral.o"
