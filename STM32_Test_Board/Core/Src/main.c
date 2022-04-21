@@ -17,12 +17,7 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
-#include "adc.h"
-#include "dma.h"
-#include "tim.h"
-#include "usart.h"
-#include "gpio.h"
+
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -90,6 +85,12 @@ void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)
 	if(GPIO_Pin == GPIO_PIN_10)
 	{
 		LED_RED_A_TOGGLE_STATE;
+
+		if(STM32_Test_Board.Show_Data == e_DAC_Signal)
+		{
+			STM32_Test_Board.DAC_Signal.Frequency = 4000;
+			STM32_Test_Board.DAC_Signal.Update = true;
+		}
 	}
 }
 
@@ -151,6 +152,8 @@ int main(void)
   MX_USART2_UART_Init();
   MX_ADC1_Init();
   MX_TIM14_Init();
+  MX_DAC1_Init();
+  MX_TIM15_Init();
   /* USER CODE BEGIN 2 */
 
   //ADC_Peripheral_Init();

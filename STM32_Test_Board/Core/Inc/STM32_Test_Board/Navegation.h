@@ -13,7 +13,8 @@ typedef enum e_Current_Screen
 	Screen_Temperature   = 0,
 	Screen_Potenciometer = 1,
 	Screen_Serial_Data   = 2,
-	Screen_PWM			 = 3
+	Screen_PWM			 = 3,
+	Screen_DAC           = 4
 }e_Current_Screen;
 
 typedef struct s_Navegation

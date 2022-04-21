@@ -22,17 +22,22 @@ void USART_Peripheral_Transmit_Data(uint8_t *Transmit_Data)
 			break;
 
 			case e_Potenciometer:
-				strcpy(Transmit_Data_Type, "Potenciometer:");
+				strcpy(Transmit_Data_Type, "Potenciometer: ");
 				strcat((char*)Transmit_Data_Type, (char*)Transmit_Data);
 			break;
 
 			case e_Serial_Data:
-				strcpy(Transmit_Data_Type, "Serial Data:");
+				strcpy(Transmit_Data_Type, "Serial Data: ");
 				strcat((char*)Transmit_Data_Type, (char*)Transmit_Data);
 			break;
 
 			case e_PWM:
-				strcpy(Transmit_Data_Type, "PMW:");
+				strcpy(Transmit_Data_Type, "PMW: ");
+				strcat((char*)Transmit_Data_Type, (char*)Transmit_Data);
+			break;
+
+			case e_DAC_Signal:
+				strcpy(Transmit_Data_Type, "DAC_Signal: ");
 				strcat((char*)Transmit_Data_Type, (char*)Transmit_Data);
 			break;
 		}
@@ -103,8 +108,15 @@ void USART_Peripheral_Transmit_Receive(void)
 		case e_PWM:
 			sprintf(Int_Buffer, "%d", STM32_Test_Board.PWM_Output.Value *100 / 1000);
 			strcat(Buffer_Transmit, Int_Buffer);
-			strcat(Buffer_Transmit, "%");
-			strcat(Buffer_Transmit, "\n");
+			strcat(Buffer_Transmit, " %\n");
+			//strcat(Buffer_Transmit, "\n");
+		break;
+
+		case e_DAC_Signal:
+			sprintf(Int_Buffer, "%d", STM32_Test_Board.DAC_Signal.Frequency);
+			strcat(Buffer_Transmit, Int_Buffer);
+			strcat(Buffer_Transmit, " Hz \n");
+
 		break;
 	}
 

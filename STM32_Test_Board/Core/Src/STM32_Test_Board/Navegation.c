@@ -28,5 +28,9 @@ void Navegation_Processing(void)
 		case Screen_PWM:
 			Screen_Mount_PWM();
 		break;
+
+		case Screen_DAC:
+			Screen_Mount_DAC();
+		break;
 	}
 }

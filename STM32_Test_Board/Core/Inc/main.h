@@ -63,6 +63,8 @@ void Error_Handler(void);
 #define POT_INPUT_GPIO_Port GPIOA
 #define LM35_INPUT_Pin GPIO_PIN_1
 #define LM35_INPUT_GPIO_Port GPIOA
+#define DAC_SIGNAL_Pin GPIO_PIN_4
+#define DAC_SIGNAL_GPIO_Port GPIOA
 #define BUTTON_ONE_Pin GPIO_PIN_5
 #define BUTTON_ONE_GPIO_Port GPIOC
 #define BUTTON_TWO_Pin GPIO_PIN_0

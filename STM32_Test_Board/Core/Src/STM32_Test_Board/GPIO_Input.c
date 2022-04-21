@@ -182,7 +182,7 @@ void GPIO_Input_Process_Button_One(void)
 	{
 		LED_LIGHT_TOGGLE_STATE;
 
-		if(STM32_Test_Board.Show_Data < 3)
+		if(STM32_Test_Board.Show_Data < 4)
 		{
 			STM32_Test_Board.Show_Data++;
 		}
@@ -219,6 +219,13 @@ void GPIO_Input_Process_Button_One(void)
 
 				STM32_Test_Board.Navegation.Should_Mount_Screen = true;
 				STM32_Test_Board.PWM_Output.Update = true;
+			break;
+
+			case e_DAC_Signal:
+				STM32_Test_Board.Navegation.Current_Screen = Screen_DAC;
+
+				STM32_Test_Board.Navegation.Should_Mount_Screen = true;
+				STM32_Test_Board.DAC_Signal.Update = true;
 			break;
 		}
 	}
@@ -263,6 +270,12 @@ void GPIO_Input_Process_Button_Four(void)
 	if(STM32_Test_Board.GPIO_Input.Button_Four.Behavior == Button_Clicked)
 	{
 		LED_BLUE_B_TOGGLE_STATE;
+
+		if(STM32_Test_Board.Show_Data == e_DAC_Signal)
+		{
+			STM32_Test_Board.DAC_Signal.Frequency = 1000;
+			STM32_Test_Board.DAC_Signal.Update = true;
+		}
 	}
 //	else
 //	{

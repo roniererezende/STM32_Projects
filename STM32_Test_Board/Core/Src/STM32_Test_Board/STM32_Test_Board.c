@@ -30,6 +30,7 @@ void STM32_Test_Board_Main(void)
 	ADC_Peripheral_Get_Samples();
 	Navegation_Processing();
 	USART_Peripheral_Transmit_Receive();
+	DAC_Signal_Generation();
 }
 
 void STM32_Test_Board_Initialization(void)
@@ -53,6 +54,8 @@ void STM32_Test_Board_Initialization(void)
 	Display_16x2_Init();
 
 	ADC_Peripheral_Init();
+
+	DAC_Signal_Init();
 
 	STM32_Test_Board.States = E_Execution;
 	STM32_Test_Board.Show_Data = e_Temperature;
@@ -119,6 +122,15 @@ void STM32_Test_Board_Update_Data(void)
 				Display_16x2_Set_Cursor(1, 9);
 				Display_16x2_Print_Integer_Number(STM32_Test_Board.PWM_Output.Printed_Value);
 				STM32_Test_Board.PWM_Output.Update = false;
+			}
+		break;
+
+		case e_DAC_Signal:
+			if(STM32_Test_Board.DAC_Signal.Update == true)
+			{
+				Display_16x2_Set_Cursor(1, 8);
+				Display_16x2_Print_Integer_Number(STM32_Test_Board.DAC_Signal.Frequency/1000);
+				STM32_Test_Board.DAC_Signal.Update = false;
 			}
 		break;
 	}
