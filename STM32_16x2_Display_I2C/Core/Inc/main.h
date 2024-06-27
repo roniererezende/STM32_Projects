@@ -31,6 +31,10 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "stdbool.h"
+#include "string.h"
+#include "LCD_16x2_I2C.h"
+
 
 /* USER CODE END Includes */
 

@@ -22,7 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "stdbool.h"
-#include "i2c-lcd.h"
+#include "LCD_16x2_I2C.h"
 
 /* USER CODE END Includes */
 
@@ -57,8 +57,6 @@ static void MX_I2C1_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-int row = 0;
-int col = 0;
 
 
 /* USER CODE END 0 */
@@ -93,15 +91,13 @@ int main(void)
   MX_GPIO_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
-  lcd_init ();
-  lcd_send_string("HELLO WORLD");
-  HAL_Delay(1000);
+  lcd_init();
+  lcd_backlight(true); // Turns on backlight
 
-  lcd_clear();
+  char *text_1 = "STM32";
+  char *text_2 = "Development";
+  char *text_3 = "Roniere";
 
-  lcd_put_cur(1, 0);
-
-  lcd_send_string("From Roniere");
 
   /* USER CODE END 2 */
 
@@ -112,22 +108,16 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  for(int i = 0; i < 128; i++)
-	  {
-		  lcd_put_cur(row, col);
-		  lcd_send_string(i+48);
-		  col++;
+	  lcd_sweep_string(text_1, 0, 6, true);
+	  lcd_sweep_string(text_2, 1, 3, false);
+	  HAL_Delay(1000);
 
-		  if(col > 15)
-		  {
-			  row++;
-			  col = 0;
-		  }
-
-		  if(row > 1) row = 0;
-
-		  HAL_Delay(250);
-	  }
+	/*
+	  lcd_clear();
+	  lcd_return_home();
+	  lcd_write_string(text_3);
+	  HAL_Delay(1000);
+	*/
   }
   /* USER CODE END 3 */
 }
