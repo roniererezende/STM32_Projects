@@ -111,13 +111,6 @@ int main(void)
 	  lcd_sweep_string(text_1, 0, 6, true);
 	  lcd_sweep_string(text_2, 1, 3, false);
 	  HAL_Delay(1000);
-
-	/*
-	  lcd_clear();
-	  lcd_return_home();
-	  lcd_write_string(text_3);
-	  HAL_Delay(1000);
-	*/
   }
   /* USER CODE END 3 */
 }
