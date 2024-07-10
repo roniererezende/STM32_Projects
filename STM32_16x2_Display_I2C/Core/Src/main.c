@@ -95,8 +95,10 @@ int main(void)
   lcd_backlight(true); // Turns on backlight
 
   char *text_1 = "STM32";
-  char *text_2 = "Development";
-  char *text_3 = "Roniere";
+  char *text_2 = "DEVELOPMENT";
+//  char *text_3 = "falta!";
+
+//  uint8_t i = 0;
 
 
   /* USER CODE END 2 */
@@ -108,9 +110,20 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  lcd_sweep_string(text_1, 0, 6, true);
-	  lcd_sweep_string(text_2, 1, 3, false);
-	  HAL_Delay(1000);
+/*	  i = 0;
+	  lcd_clear();
+	  lcd_set_cursor(0, 6);
+	  lcd_write_string(text_1);
+	  HAL_Delay(2000);
+	  lcd_clear();
+
+	  while(i < 16)
+	  {
+*/		  lcd_sweep_string(text_1, 0, 5, true);
+		  lcd_sweep_string(text_2, 1, 3, false);
+		  HAL_Delay(1000);
+//		  i++;
+//	  }
   }
   /* USER CODE END 3 */
 }
