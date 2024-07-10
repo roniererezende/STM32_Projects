@@ -25,7 +25,7 @@ int main(void)
 
 void DelaySys_ms(uint32_t Time)
 {
-	SysTick->LOAD  = Time * 1000;
+	SysTick->LOAD  = Time * 1000; // 1000x because SysTick is based em us
 	SysTick->VAL   = 0;
 	SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;
 
