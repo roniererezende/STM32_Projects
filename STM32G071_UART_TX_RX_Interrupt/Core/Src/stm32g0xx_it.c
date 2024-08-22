@@ -23,6 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 /* USER CODE END Includes */
+#include <stdbool.h>
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN TD */
@@ -41,6 +42,8 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
+extern uint16_t SysTick_Counter;
+extern bool Blue_Led_Flag;
 
 /* USER CODE END PV */
 
@@ -55,7 +58,7 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-
+extern UART_HandleTypeDef huart1;
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -122,16 +125,22 @@ void PendSV_Handler(void)
 /**
   * @brief This function handles System tick timer.
   */
-//void SysTick_Handler(void)
-//{
+void SysTick_Handler(void)
+{
   /* USER CODE BEGIN SysTick_IRQn 0 */
+	SysTick_Counter++;
+	if(SysTick_Counter > 5000)
+	{
+		Blue_Led_Flag = true;
+		SysTick_Counter = 0;
+	}
 
   /* USER CODE END SysTick_IRQn 0 */
-//  HAL_IncTick();
+  HAL_IncTick();
   /* USER CODE BEGIN SysTick_IRQn 1 */
 
   /* USER CODE END SysTick_IRQn 1 */
-//}
+}
 
 /******************************************************************************/
 /* STM32G0xx Peripheral Interrupt Handlers                                    */
@@ -139,6 +148,20 @@ void PendSV_Handler(void)
 /* For the available peripheral interrupt handler names,                      */
 /* please refer to the startup file (startup_stm32g0xx.s).                    */
 /******************************************************************************/
+
+/**
+  * @brief This function handles USART1 global interrupt / USART1 wake-up interrupt through EXTI line 25.
+  */
+void USART1_IRQHandler(void)
+{
+  /* USER CODE BEGIN USART1_IRQn 0 */
+
+  /* USER CODE END USART1_IRQn 0 */
+  HAL_UART_IRQHandler(&huart1);
+  /* USER CODE BEGIN USART1_IRQn 1 */
+
+  /* USER CODE END USART1_IRQn 1 */
+}
 
 /* USER CODE BEGIN 1 */
 

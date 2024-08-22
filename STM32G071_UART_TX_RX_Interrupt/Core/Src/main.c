@@ -59,15 +59,18 @@ static void MX_USART1_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void SysTick_Handler(void)
+
+uint8_t tx_buff[] = {65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 11}; // ABCDEFGHIJ in ASCII code
+
+/*void SysTick_Handler(void)
 {
 	SysTick_Counter++;
-	if(SysTick_Counter > 1000)
+	if(SysTick_Counter > 5000)
 	{
 		Blue_Led_Flag = true;
 		SysTick_Counter = 0;
 	}
-}
+}*/
 
 /* USER CODE END 0 */
 
@@ -113,7 +116,10 @@ int main(void)
 	  {
 		  HAL_GPIO_TogglePin(LED_BLUE_GPIO_Port, LED_BLUE_Pin);
 		  Blue_Led_Flag = false;
+
+		  HAL_UART_Transmit_IT(&huart1, tx_buff, sizeof(tx_buff));
 	  }
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
