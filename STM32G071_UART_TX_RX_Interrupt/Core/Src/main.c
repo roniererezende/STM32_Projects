@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdbool.h>
+#include <string.h>
 
 /* USER CODE END Includes */
 
@@ -61,6 +62,7 @@ static void MX_USART1_UART_Init(void);
 /* USER CODE BEGIN 0 */
 
 uint8_t tx_buff[] = {65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 11}; // ABCDEFGHIJ in ASCII code
+uint8_t rx_buff[10];
 
 /*void SysTick_Handler(void)
 {
@@ -105,6 +107,8 @@ int main(void)
   MX_GPIO_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
+  HAL_UART_Receive_IT(&huart1, rx_buff, sizeof(rx_buff));
+
 
   /* USER CODE END 2 */
 
@@ -116,6 +120,8 @@ int main(void)
 	  {
 		  HAL_GPIO_TogglePin(LED_BLUE_GPIO_Port, LED_BLUE_Pin);
 		  Blue_Led_Flag = false;
+
+		  strcpy((char*)tx_buff, (char*)rx_buff);
 
 		  HAL_UART_Transmit_IT(&huart1, tx_buff, sizeof(tx_buff));
 	  }
@@ -251,6 +257,10 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+	HAL_UART_Receive_IT(&huart1, rx_buff, sizeof(rx_buff));
+}
 
 /* USER CODE END 4 */
 
