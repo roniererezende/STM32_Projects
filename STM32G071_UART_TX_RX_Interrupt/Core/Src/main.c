@@ -47,6 +47,8 @@ UART_HandleTypeDef huart1;
 /* USER CODE BEGIN PV */
 uint16_t SysTick_Counter;
 bool Blue_Led_Flag;
+bool rx_cplt;
+bool tx_cplt;
 
 /* USER CODE END PV */
 
@@ -56,13 +58,16 @@ static void MX_GPIO_Init(void);
 static void MX_USART1_UART_Init(void);
 /* USER CODE BEGIN PFP */
 
+void clear_String(char* string);
+uint8_t string_Length(char* string);
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-uint8_t tx_buff[] = {65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 11}; // ABCDEFGHIJ in ASCII code
-uint8_t rx_buff[10];
+uint8_t tx_buff[] = {65, 66, 67, 68, 69, 70, 71, 72, 00}; // ABCDEFGHIJ in ASCII code
+uint8_t rx_buff[9];
 
 /*void SysTick_Handler(void)
 {
@@ -74,6 +79,26 @@ uint8_t rx_buff[10];
 	}
 }*/
 
+void clear_String(char* string)
+{
+	uint8_t index = 0;
+	for(index = 0; index < 10; index++)
+	{
+		string[index] = '\0';
+	}
+}
+
+uint8_t string_Length(char* string)
+{
+	uint8_t index = 0;
+
+	while(string[index] != '\0')
+	{
+		index++;
+	}
+
+	return index;
+}
 /* USER CODE END 0 */
 
 /**
@@ -121,10 +146,21 @@ int main(void)
 		  HAL_GPIO_TogglePin(LED_BLUE_GPIO_Port, LED_BLUE_Pin);
 		  Blue_Led_Flag = false;
 
-		  strcpy((char*)tx_buff, (char*)rx_buff);
+		  /*if(tx_cplt == true)
+		  {
+			  clear_String((char*)tx_buff);
+			  tx_cplt = false;
+		  }*/
+	  }
 
+	  if(rx_cplt == true)
+	  {
+		  strcpy((char*)tx_buff, (char*)rx_buff);
+		  //clear_String((char*)rx_buff);
+		  rx_cplt = false;
 		  HAL_UART_Transmit_IT(&huart1, tx_buff, sizeof(tx_buff));
 	  }
+
 
     /* USER CODE END WHILE */
 
@@ -260,6 +296,13 @@ static void MX_GPIO_Init(void)
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
 	HAL_UART_Receive_IT(&huart1, rx_buff, sizeof(rx_buff));
+
+	rx_cplt = true;
+}
+
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
+{
+	tx_cplt = true;
 }
 
 /* USER CODE END 4 */
