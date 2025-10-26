@@ -1,0 +1,5 @@
+../Core/Src/mqtt.c:16:6:mqtt_init	1
+../Core/Src/mqtt.c:21:6:mqtt_publish_data	2
+../Core/Src/mqtt.c:37:6:mqtt_connection_cb	2
+../Core/Src/mqtt.c:50:6:mqtt_create_json_protocol	4
+../Core/Src/mqtt.c:106:6:mqtt_transmission	2

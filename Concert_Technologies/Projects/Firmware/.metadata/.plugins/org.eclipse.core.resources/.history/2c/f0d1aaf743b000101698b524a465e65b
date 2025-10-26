@@ -1,0 +1,24 @@
+/*
+ * can.c
+ *
+ *  Created on: Oct 23, 2025
+ *      Author: Roniere_Rezende
+ */
+
+/* INCLUDE */
+#include "bsp.h"
+
+
+id_can_0x100_t id_can_0x100;
+id_can_0x200_t id_can_0x200;
+
+/* FUNCTION DECLARATION */
+void can_receive(void)
+{
+	bsp.data.altura       = payload_id_can_0x100[7] + payload_id_can_0x100[6];
+	bsp.data.peso
+	bsp.data.status_flags
+
+	bsp.data.tensao
+	bsp.data.horimetro
+}

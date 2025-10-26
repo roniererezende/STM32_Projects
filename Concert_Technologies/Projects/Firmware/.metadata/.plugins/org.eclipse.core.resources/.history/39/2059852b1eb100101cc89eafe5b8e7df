@@ -1,0 +1,53 @@
+/*
+ * led.c
+ *
+ *  Created on: Oct 23, 2025
+ *      Author: Roniere_Rezende
+ */
+
+/* INCLUDE */
+#include "bsp.h"
+
+/*  FUNCTIONS */
+void led_init(void)
+{
+	bsp.led.counter = 0;
+
+	bsp.led.state = led_on;
+}
+
+void led_turn_on(void)
+{
+	LED_STATUS_HIGH();
+	bsp.led.status = true;
+}
+
+void led_turn_off(void)
+{
+	LED_STATUS_LOW();
+	bsp.led.status = false;
+}
+
+void led_handle(void)
+{
+	switch (bsp.led.state)
+	{
+		case led_initialization:
+			led_init();
+		break;
+
+		case led_on:
+			led_turn_on();
+			break;
+
+		case led_off:
+			led_turn_off();
+			break;
+	}
+
+	if((bsp.led.status == false) && (bsp.led.state == led_off))
+	{
+		bsp.state = bsp_idle;
+		bsp.led.state = led_initialization;
+	}
+}

@@ -1,0 +1,22 @@
+/*
+ * bsp.h
+ *
+ *  Created on: Oct 23, 2025
+ *      Author: Roniere_Rezende
+ */
+
+#ifndef INC_BSP_H_
+#define INC_BSP_H_
+
+/* INCLUDES */
+#include "main.h"
+#include "string.h"
+#include "interrupcao.h"
+
+#include <stdbool.h>
+
+
+/* FUNCTION PROTOTYPES */
+BSP_init(void);
+
+#endif /* INC_BSP_H_ */

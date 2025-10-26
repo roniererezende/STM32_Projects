@@ -1,0 +1,51 @@
+/*
+ * led.c
+ *
+ *  Created on: Oct 23, 2025
+ *      Author: Roniere_Rezende
+ */
+
+/* INCLUDE */
+#include "bsp.h"
+
+/*  FUNCTIONS */
+void led_init(void)
+{
+	bsp.led.status = true;
+	bsp.led.counter = 0;
+
+	bsp.led.state = turn_on;
+}
+
+void led_turn_on(void)
+{
+	HAL_GPIO_WritePin(LED_STATUS_GPIO_Port, LED_STATUS_Pin, GPIO_PIN_SET);
+}
+
+void led_turn_off(void)
+{
+	HAL_GPIO_WritePin(LED_STATUS_GPIO_Port, LED_STATUS_Pin, GPIO_PIN_RESET);
+}
+
+void led_handle(void)
+{
+	switch (bsp.led.state)
+	{
+		case led_init:
+			led_init();
+		break;
+
+		case led_turn_on:
+			led_turn_on();
+			break;
+
+		case led_turn_off:
+			led_turn_off();
+			break;
+	}
+
+	if(bsp.led.status == false && bsp.led.state == turn_off)
+	{
+		bsp.state = idle;
+	}
+}

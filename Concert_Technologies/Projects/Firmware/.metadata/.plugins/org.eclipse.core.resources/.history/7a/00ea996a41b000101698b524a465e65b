@@ -1,0 +1,33 @@
+/*
+ * can.h
+ *
+ *  Created on: Oct 23, 2025
+ *      Author: Roniere_Rezende
+ */
+
+#ifndef INC_CAN_H_
+#define INC_CAN_H_
+
+/* STRUCTURES */
+
+typedef struct
+{
+	uint8_t altura_msb;
+	uint8_t altura_lsb;
+	uint8_t peso_msb;
+	uint8_t peso_lsb;
+	uint status
+
+}id_can_0x100_t;
+
+typedef struct
+{
+	uint8_t  payload[8];
+	uint8_t  tensao;
+	uint32_t horimetro;
+}id_can_0x200_t;
+
+/* FUNCTIONS PROTOTYPE */
+void can_receive(void);
+
+#endif /* INC_CAN_H_ */

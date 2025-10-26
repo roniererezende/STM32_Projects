@@ -1,0 +1,96 @@
+/*
+ * bsp.c
+ *
+ *  Created on: Oct 23, 2025
+ *      Author: Roniere_Rezende
+ */
+
+/* INCLUDES */
+#include <mte100.h>
+
+/* VARIABLES */
+mte100_s mte100;
+
+
+/* FUNCTION DECLARATION */
+void mte100_init(void)
+{
+
+	// Habilita a contador do timer 1 realiza a interrupção a 1ms. A cada 2 segundos ele habilitará uma flag que permitirá o recebimento das mensagem da CAN
+	HAL_TIM_Base_Start(&htim1);
+
+	// Habilita a contador do timer 1 realiza a interrupção a 1ms. A cada 5 minutos ele habilitará uma flag que permitirá o transmissão do pacote json
+	HAL_TIM_Base_Start(&htim3);
+
+	// Habilita a interrupção do Timer 1
+	HAL_TIM_Base_Start_IT(&htim1);
+
+	// Habilita a interrupção do Timer 3
+	HAL_TIM_Base_Start_IT(&htim3);
+
+	//Inicializa o protocolo CAN
+	can_init();
+
+	mte100.led.state  = led_initialization;
+
+	// Inicializa a variável que habilita a transmissão com "false"
+	mte100.mqtt.transmit = false;
+}
+
+void mte100_set_broker(void)
+{
+	// Configura IP do broker
+	ipaddr_aton(MQTT_BROKER_IP, &mqtt_server_ip);
+
+	client = mqtt_client_new();
+
+	if(client == NULL)
+	{
+		printf("Error to create MQTT client!\n");
+		Error_Handler();
+	}
+}
+
+void mte100_idle_(void)
+{
+
+}
+
+void mte100_main(void)
+{
+	switch (mte100.state)
+	{
+		case mte100_initialization:
+			mte100_init();
+			mte100.state = mte100_set_broker_IP;
+		break;
+
+		case mte100_set_broker_IP:
+			mte100_set_broker();
+			mte100.state = mte100_idle;
+		break;
+
+		case mte100_idle:
+			mte100_idle_();
+		break;
+
+		case mte100_reception_can:
+			can_reception();
+		break;
+
+		case mte100_transmission_json:
+			mqtt_transmission();
+		break;
+	}
+
+	led_handle();
+}
+
+void mte100_error_handler(void)
+{
+	while(true)
+	{
+		LED_STATUS_TOGGLE();
+		HAL_Delay(100);
+	}
+}

@@ -1,0 +1,62 @@
+/*
+ * led.c
+ *
+ *  Created on: Oct 23, 2025
+ *      Author: Roniere_Rezende
+ */
+
+/* INCLUDE */
+#include <mte100.h>
+
+/*  FUNCTIONS */
+void led_init(void)
+{
+	bsp.led.toggle  = false;
+}
+
+void led_idle_(void)
+{
+	LED_STATUS_LOW();
+	bsp.led.toggle = false;
+}
+
+void led_rx_data_can(void)
+{
+	if(bsp.led.toggle == true)
+	{
+		LED_STATUS_TOGGLE();
+		bsp.led.toggle = false;
+	}
+}
+
+void led_tx_transmit_data_mqtt(void)
+{
+	if(bsp.led.toggle == true)
+	{
+		LED_STATUS_TOGGLE();
+		bsp.led.toggle = false;
+	}
+
+}
+
+void led_handle(void)
+{
+	switch (mte100.led.state)
+	{
+		case led_initialization:
+			led_init();
+		break;
+
+		case led_idle:
+			led_idle_();
+			break;
+
+		case led_receive_data_can:
+			led_rx_data_can();
+			break;
+
+		case led_transmit_data_mqtt:
+			led_tx_transmit_data_mqtt();
+			break;
+	}
+}

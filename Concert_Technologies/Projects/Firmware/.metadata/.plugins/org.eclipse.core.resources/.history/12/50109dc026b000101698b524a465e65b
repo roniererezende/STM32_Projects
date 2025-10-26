@@ -1,0 +1,15 @@
+/*
+ * can.c
+ *
+ *  Created on: Oct 23, 2025
+ *      Author: Roniere_Rezende
+ */
+
+/* INCLUDE */
+#include "bsp.h"
+
+/* FUNCTION DECLARATION */
+void can_receive(void)
+{
+
+}

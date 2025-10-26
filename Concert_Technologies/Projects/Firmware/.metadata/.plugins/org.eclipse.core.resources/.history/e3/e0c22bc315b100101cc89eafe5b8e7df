@@ -1,0 +1,71 @@
+/*
+ * bsp.c
+ *
+ *  Created on: Oct 23, 2025
+ *      Author: Roniere_Rezende
+ */
+
+/* INCLUDES */
+#include "bsp.h"
+
+/* VARIABLES */
+bsp_s bsp;
+
+
+/* FUNCTION DECLARATION */
+void bsp_init(void)
+{
+	// Habilita a contador do timer 1 realiza a interrupção a 1ms. A cada 2 segundos ele habilitará uma flag que permitirá o recebimento das mensagem da CAN
+	HAL_TIM_Base_Start(&htim1);
+
+	// Habilita a contador do timer 1 realiza a interrupção a 1ms. A cada 5 minutos ele habilitará uma flag que permitirá o transmissão do pacote json
+	HAL_TIM_Base_Start(&htim3);
+
+	// Habilita a interrupção do Timer 1
+	HAL_TIM_Base_Start_IT(&htim1);
+
+	// Habilita a interrupção do Timer 3
+	HAL_TIM_Base_Start_IT(&htim3);
+
+	//Inicializa o protocolo CAN
+	can_init();
+
+	bsp.led.status = false;
+	bsp.led.state  = led_initialization;
+}
+
+void bsp_idle_(void)
+{
+
+}
+
+void bsp_main(void)
+{
+	switch (bsp.state)
+	{
+		case bsp_initialization:
+			bsp_init();
+			bsp.state = bsp_idle;
+		break;
+
+		case bsp_s
+
+		case bsp_idle:
+			bsp_idle_();
+		break;
+
+		case bsp_reception_can:
+			can_reception();
+			bsp.state = bsp_reception_ready;
+		break;
+
+		case bsp_reception_ready:
+			led_handle();
+		break;
+
+		case bsp_transmission_json:
+			mqtt_transmission();
+			bsp.state = bsp_idle;
+		break;
+	}
+}

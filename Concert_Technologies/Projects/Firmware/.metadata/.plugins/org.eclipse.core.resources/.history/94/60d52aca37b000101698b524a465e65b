@@ -1,0 +1,14 @@
+/*
+ * led.c
+ *
+ *  Created on: Oct 23, 2025
+ *      Author: Roniere_Rezende
+ */
+
+/* INCLUDE */
+#include "bsp.h"
+
+void led_blink(void)
+{
+
+}

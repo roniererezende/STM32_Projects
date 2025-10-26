@@ -1,0 +1,21 @@
+/*
+ * interrupcao.c
+ *
+ *  Created on: Oct 23, 2025
+ *      Author: Roniere_Rezende
+ */
+#include "bsp.h"
+
+uint16_t count_millissecond = 0;
+
+// Função de Callback da Interrupção
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+	count_millissecond++;
+
+	// A cada 2 segundos é habilitado o estado "run" para que se seja realizado a transmissão dos dados via CAN
+	if(count_millissecond > 1999)
+	{
+		bsp.state = run;
+	}
+}
