@@ -9,6 +9,9 @@ Os arquivos incluídos no projeto são os seguintes:
 - can.c/.h    - Rotinas referentes ao protocolo CAN. Esta rotina foi criada automaticamente pelo STM32CubeIDE, porém foram adicionadas essas funções ao arquivo.
 - led.c/h     - Rotinas de manipulação do led
 
+
+***************************************************************************************************
+
 **** FUNÇõES ****
 
 --- met100.c/.h ---
@@ -57,6 +60,9 @@ led_tx_transmit_data_mqtt()  -> Realiza o toggle do LED indicando o transmissão
 
 led_handle()                 -> Manipula o LED de acordo com o seu estado.
 
+
+***************************************************************************************************
+
 **** DESCRIÇÃO DO FUNCIONAMENTO ****
 
 O firmware do projeto é dividido em 6 estados e são os seguintes:
@@ -100,8 +106,19 @@ A transmissão do tópico MQTT é liberada a casa 5 minutos.
 O controle do tempo é realizado pelo clock do sistema, SysTick. O SysTick possui um interrupção 
 a cada 1 ms e chamado pela função SysTick_Handler() que está no arquivo stm32f7xx_it.c na linha 188.
 
+
 ***************************************************************************************************
 
+**** LED STATUS ****
+
+- Recepção dos dados do protocolo can: o LED dá 1 piscada de 100 ms a cada recebimento dos dados.
+
+- Transmissão dos dados via tópico MQTT: O LED dá 2 piscadas de 100 ms a cada transmissão dos dados.
+
+- Indicação de erro: o LED fica piscando a cada 100 ms ininterruptamente.
+
+
+***************************************************************************************************
 Por boas práticas de programação, dentro do arquivo main.c não realizadas implementações. É somente 
 deixada as implementações realizadas pela própria IDE.
 
