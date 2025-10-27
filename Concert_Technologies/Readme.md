@@ -128,3 +128,5 @@ deixada as implementações realizadas pela própria IDE.
 - Não foi utilizado o FreeRTOS, porque é uma tecnologia que ainda não domino e não achei prudente tentar fazer por dele e haver algum erro.
   Por barematel, tenho mais segurança em desenvolver o código no momento.
   Porém venho estudando o FreeRTOS, para realizar as implementações multitasks e utilizar as suas demais características.
+  
+- A configuração dos periférios internos do microcontrolador foram realizadas via configurador do STM32CubeIDE.
