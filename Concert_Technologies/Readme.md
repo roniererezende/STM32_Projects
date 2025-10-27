@@ -4,9 +4,9 @@ Este documento tem por fim descrever o funcionamento o firmware e das função i
 
 Os arquivos incluídos no projeto são os seguintes:
 
-- mte100.c/.h
-- mqtt.c/.h
-- led.c/h
+- mte100.c/.h - Rotinas da aplicações do projeto
+- mqtt.c/.h   - Rotinas do tópido MQTT
+- led.c/h     - Rotinas de manipulação do led
 
 **** FUNÇõES ****
 
@@ -45,3 +45,51 @@ led_tx_transmit_data_mqtt() -> Realiza o toggle do LED indicando o transmissão 
 led_handle()                -> Manipula o LED de acordo com o seu estado.
 
 **** DESCRIÇÃO DO FUNCIONAMENTO ****
+
+O firmware do projeto é dividido em 6 estados e são os seguintes:
+
+- Inicialização dos periféricos internos
+- Inicialização dos periféricos externos
+- Configuração do broker
+- Idle
+- Recepção CAN
+- Transmissão JSON
+
+&&&&& Descrição dos estados &&&&& 
+
+- Inicialização dos periféricos internos
+
+Inicializa todos os periféricos internos com as rotinas geradas pelo próprio do STM32CubeIDE.
+
+- Inicialização dos periféricos externos
+
+Inicializa todos os periféricos externos, como o LAN8742 e o TCAN1042.
+
+- Configuração do broker
+
+Configura o IP do broker e o cliente MQTT.
+
+- Idle
+
+Não realiza nenhuma função, apenas é um estado que se mantém inerte até a recepção dos dados via 
+protocolo CAN ou transmissão dos dados via tópico MQTT sejam liberados pelo contador.
+
+- Recepção CAN
+
+A recepção do protocolo CAN é liberada a cada 2s. Como não é possível realizar o teste prático, 
+é simulado o recebimento dos dados acessando um buffer que tem disponível 4 pacotes diferentes 
+que estão contidos na função "can_simulation_transmition" que é declarada dentro do arquivo can.c. 
+
+- Transmissão JSON
+
+A transmissão do tópico MQTT é liberada a casa 5 minutos.
+
+O controle do tempo é realizado pelo clock do sistema, SysTick. O SysTick possui um interrupção 
+a cada 1 ms e chamado pela função SysTick_Handler() que está no arquivo stm32f7xx_it.c na linha 188.
+
+***************************************************************************************************
+
+Por boas práticas de programação, dentro do arquivo main.c não realizadas implementações. É somente 
+deixada as implementações realizadas pela própria IDE.
+
+A aplicação toda é realizada dentro do loop infinito com a chamada na função mte100_main().
