@@ -13,13 +13,6 @@ mte100_s mte100;
 
 
 /* FUNCTION DECLARATION */
-
-/*
- * @Função    : mte100_init
- * @Descrição : Inicializa os estados das máquinas de estado da aplicação e o LED.
- * 			    Inicializa se necessário as variáveis do protocolo CAN.
- * @Parâmetros: Não há
- */
 void mte100_init(void)
 {
 
@@ -28,27 +21,17 @@ void mte100_init(void)
 
 	mte100.led.state  = led_initialization;
 
+
 	// Inicializa a variável que habilita a transmissão com "false"
 	mte100.mqtt.transmit = false;
 }
 
-/*
- * @Função    : mte100_idle_
- * @Descrição : Não realiza nenhuma rotina aguardanddo a recepção dos dados via protocolo CAN
- * 			    e a transmissão do protocolo JSON via tópico MQTT.
- * @Parâmetros: Não há
- */
+
 void mte100_idle_(void)
 {
 
 }
 
-/*
- * @Função    : mte100_main
- * @Descrição : Rotina em que toda aplicação é realizada, recebendo os dados via CAN e transmitindo via MQTT.
- * 			    Também manipula dos LEDs.
- * @Parâmetros: Não há
- */
 void mte100_main(void)
 {
 	switch (mte100.state)
@@ -81,11 +64,6 @@ void mte100_main(void)
 	led_handle();
 }
 
-/*
- * @Função    : mte100_error_handler
- * @Descrição : Em caso de erro/falha, essa função manipula o LED para pisca a cada 100 ms.
- * @Parâmetros: Não há
- */
 void mte100_error_handler(void)
 {
 	while(true)

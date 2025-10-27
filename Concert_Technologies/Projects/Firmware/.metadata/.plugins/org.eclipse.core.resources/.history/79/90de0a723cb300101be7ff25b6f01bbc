@@ -114,22 +114,11 @@ void HAL_CAN_MspDeInit(CAN_HandleTypeDef* canHandle)
 }
 
 /* USER CODE BEGIN 1 */
-
-/*
- * @Função    : can_init
- * @Descrição : Inicializa os parâmetros e variáveis referentes ao protocolo CAN quando houver.
- * @Parâmetros: Não há
- */
 void can_init(void)
 {
 
 }
 
-/*
- * @Função    : can_reception
- * @Descrição : Recebe e processa os dados recebidos via protocolo CAN.
- * @Parâmetros: Não há
- */
 void can_reception(void)
 {
 	mte100.data.altura       = ((payload_id_can_0x100[0] << 8) | payload_id_can_0x100[1]);
@@ -141,12 +130,6 @@ void can_reception(void)
 
 }
 
-/*
- * @Função    : can_simulation_transmition
- * @Descrição : Simula a recepção do protocolo CAN selecionando 4 pacotes diferentes disponíveis.
- * @Parâmetros:
- * 		- packet_num: recebe o valor que indica qual pacote deve ser selecionado
- */
 void can_simulation_transmition(uint8_t packet_num)
 {
 	switch (packet_num)

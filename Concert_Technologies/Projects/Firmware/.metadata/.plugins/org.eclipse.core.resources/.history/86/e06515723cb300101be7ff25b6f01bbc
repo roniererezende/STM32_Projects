@@ -10,8 +10,8 @@
 
 /*  FUNCTIONS */
 /*
- * @Função    : led_init
- * @Descrição : Inicializa o LED em nível lógico baixo e configura a flag de toggle LED para nível lógico baixo.
+ * @Função: led_init
+ * @Descrição: Inicializa o LED em nível lógico baixo e configura a flag de toggle LED para nível lógico baixo.
  * @Parâmetros: Não há
  */
 void led_init(void)
@@ -21,8 +21,8 @@ void led_init(void)
 }
 
 /*
- * @Função    : led_idle_
- * @Descrição : Mantém o LED apagado enquanto aguarda o recebimento dos dados da CAN ou transmissão via MQTT.
+ * @Função: led_idle_
+ * @Descrição: Mantém o LED apagado enquanto aguarda o recebimento dos dados da CAN ou transmissão via MQTT.
  * @Parâmetros: Não há
  */
 void led_idle_(void)
@@ -32,8 +32,8 @@ void led_idle_(void)
 }
 
 /*
- * @Função    : led_rx_data_can
- * @Descrição : Realiza o toggle do LED indicando o recepção dos dados via protocolo CAN.
+ * @Função: led_rx_data_can
+ * @Descrição: Realiza o toggle do LED indicando o recepção dos dados via protocolo CAN.
  * @Parâmetros: Não há
  */
 void led_rx_data_can(void)
@@ -46,8 +46,8 @@ void led_rx_data_can(void)
 }
 
 /*
- * @Função    : led_tx_transmit_data_mqtt
- * @Descrição : Realiza o toggle do LED indicando o transmissão dos dados via tópico MQTT.
+ * @Função: led_tx_transmit_data_mqtt
+ * @Descrição: Realiza o toggle do LED indicando o transmissão dos dados via tópico MQTT.
  * @Parâmetros: Não há
  */
 void led_tx_transmit_data_mqtt(void)
@@ -61,8 +61,8 @@ void led_tx_transmit_data_mqtt(void)
 }
 
 /*
- * @Função    : led_handle
- * @Descrição : Manipula o LED de acordo com o seu estado.
+ * @Função: led_handle
+ * @Descrição: Manipula o LED de acordo com o seu estado.
  * @Parâmetros: Não há
  */
 void led_handle(void)

@@ -1,5 +1,5 @@
-../Core/Src/led.c:12:6:led_init	4	static
-../Core/Src/led.c:17:6:led_idle_	8	static
-../Core/Src/led.c:23:6:led_rx_data_can	8	static
-../Core/Src/led.c:32:6:led_tx_transmit_data_mqtt	8	static
-../Core/Src/led.c:42:6:led_handle	8	static
+../Core/Src/led.c:17:6:led_init	8	static
+../Core/Src/led.c:28:6:led_idle_	8	static
+../Core/Src/led.c:39:6:led_rx_data_can	8	static
+../Core/Src/led.c:53:6:led_tx_transmit_data_mqtt	8	static
+../Core/Src/led.c:68:6:led_handle	8	static
