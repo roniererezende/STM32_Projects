@@ -70,8 +70,8 @@ all: main-build
 main-build: MTE-100.elf secondary-outputs
 
 # Tool invocations
-MTE-100.elf MTE-100.map: $(OBJS) $(USER_OBJS) D:\Meus\ Documentos\Projects\Concert\ Technologies\Projects\Firmware\MTE-100\STM32F767VITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "MTE-100.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"D:\Meus Documentos\Projects\Concert Technologies\Projects\Firmware\MTE-100\STM32F767VITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="MTE-100.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+MTE-100.elf MTE-100.map: $(OBJS) $(USER_OBJS) D:\Meus\ Documentos\Projects\Concert_Technologies\Projects\Firmware\MTE-100\STM32F767VITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "MTE-100.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"D:\Meus Documentos\Projects\Concert_Technologies\Projects\Firmware\MTE-100\STM32F767VITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="MTE-100.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

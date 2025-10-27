@@ -18,6 +18,7 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
+#include "can.h"
 
 /* USER CODE BEGIN 0 */
 #include <mte100.h>
@@ -120,11 +121,11 @@ void can_init(void)
 void can_reception(void)
 {
 	mte100.data.altura       = ((payload_id_can_0x100[0] << 8) | payload_id_can_0x100[1]);
-	mte100.data.peso		  = ((payload_id_can_0x100[2] << 8) | payload_id_can_0x100[3]);
+	mte100.data.peso		 = ((payload_id_can_0x100[2] << 8) | payload_id_can_0x100[3]);
 	mte100.data.status_flags = payload_id_can_0x100[4];
 
 	mte100.data.tensao       = (uint8_t) (payload_id_can_0x200[0] * 0.5);
-	mte100.data.horimetro	  = ((payload_id_can_0x200[4] << 24) | (payload_id_can_0x200[5] << 16) |(payload_id_can_0x200[6] << 8) | payload_id_can_0x200[7]);
+	mte100.data.horimetro	 = ((payload_id_can_0x200[4] << 24) | (payload_id_can_0x200[5] << 16) |(payload_id_can_0x200[6] << 8) | payload_id_can_0x200[7]);
 
 }
 

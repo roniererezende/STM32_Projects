@@ -24,6 +24,7 @@ typedef struct
 
 /* FUNCTION PROTOTYPE */
 void mqtt_init(void);
+void mqtt_set_broker(void);
 void mqtt_transmission(void);
 
 void mqtt_publish_data(void);

@@ -1,0 +1,4 @@
+../Core/Src/mte100.c:16:6:mte100_init	8	static
+../Core/Src/mte100.c:30:6:mte100_idle_	4	static
+../Core/Src/mte100.c:35:6:mte100_main	8	static
+../Core/Src/mte100.c:67:6:mte100_error_handler	8	static

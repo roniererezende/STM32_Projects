@@ -1,5 +1,6 @@
-../Core/Src/mqtt.c:16:6:mqtt_init	4	static
-../Core/Src/mqtt.c:21:6:mqtt_publish_data	40	static
-../Core/Src/mqtt.c:37:6:mqtt_connection_cb	24	static
-../Core/Src/mqtt.c:50:6:mqtt_create_json_protocol	80	static
-../Core/Src/mqtt.c:106:6:mqtt_transmission	8	static
+../Core/Src/mqtt.c:16:6:mqtt_init	24	static
+../Core/Src/mqtt.c:31:6:mqtt_set_broker	8	static
+../Core/Src/mqtt.c:45:6:mqtt_publish_data	40	static
+../Core/Src/mqtt.c:62:6:mqtt_connection_cb	24	static
+../Core/Src/mqtt.c:75:6:mqtt_create_json_protocol	80	static
+../Core/Src/mqtt.c:131:6:mqtt_transmission	8	static

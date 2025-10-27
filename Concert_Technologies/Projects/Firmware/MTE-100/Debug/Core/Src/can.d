@@ -1,4 +1,4 @@
-Core/Src/can.o: ../Core/Src/can.c ../Core/Inc/mte100.h ../Core/Inc/main.h \
+Core/Src/can.o: ../Core/Src/can.c ../Core/Inc/can.h ../Core/Inc/main.h \
  ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h \
  ../Core/Inc/stm32f7xx_hal_conf.h \
  ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_rcc.h \
@@ -27,11 +27,7 @@ Core/Src/can.o: ../Core/Src/can.c ../Core/Inc/mte100.h ../Core/Inc/main.h \
  ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_i2c_ex.h \
  ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_pwr.h \
  ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_pwr_ex.h \
- ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim.h \
- ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim_ex.h \
- ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h \
- ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.h \
- ../LWIP/App/lwip.h \
+ ../Core/Inc/mte100.h ../LWIP/App/lwip.h \
  ../Middlewares/Third_Party/LwIP/src/include/lwip/opt.h \
  ../LWIP/Target/lwipopts.h ../Core/Inc/main.h \
  ../Middlewares/Third_Party/LwIP/src/include/lwip/debug.h \
@@ -72,10 +68,9 @@ Core/Src/can.o: ../Core/Src/can.c ../Core/Inc/mte100.h ../Core/Inc/main.h \
  ../Middlewares/Third_Party/LwIP/src/include/lwip/apps/mqtt.h \
  ../Middlewares/Third_Party/LwIP/src/include/lwip/apps/mqtt_opts.h \
  ../Middlewares/Third_Party/LwIP/src/include/lwip/prot/iana.h \
- ../Core/Inc/tim.h ../Core/Inc/usart.h ../Core/Inc/gpio.h \
- ../Core/Inc/interrupcao.h ../Core/Inc/can.h ../Core/Inc/led.h \
- ../Core/Inc/mte100.h ../Core/Inc/mqtt.h
-../Core/Inc/mte100.h:
+ ../Core/Inc/can.h ../Core/Inc/stm32f7xx_it.h ../Core/Inc/gpio.h \
+ ../Core/Inc/led.h ../Core/Inc/mte100.h ../Core/Inc/mqtt.h
+../Core/Inc/can.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h:
 ../Core/Inc/stm32f7xx_hal_conf.h:
@@ -105,10 +100,7 @@ Core/Src/can.o: ../Core/Src/can.c ../Core/Inc/mte100.h ../Core/Inc/main.h \
 ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_i2c_ex.h:
 ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_pwr.h:
 ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_pwr_ex.h:
-../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim.h:
-../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim_ex.h:
-../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h:
-../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.h:
+../Core/Inc/mte100.h:
 ../LWIP/App/lwip.h:
 ../Middlewares/Third_Party/LwIP/src/include/lwip/opt.h:
 ../LWIP/Target/lwipopts.h:
@@ -151,11 +143,9 @@ Core/Src/can.o: ../Core/Src/can.c ../Core/Inc/mte100.h ../Core/Inc/main.h \
 ../Middlewares/Third_Party/LwIP/src/include/lwip/apps/mqtt.h:
 ../Middlewares/Third_Party/LwIP/src/include/lwip/apps/mqtt_opts.h:
 ../Middlewares/Third_Party/LwIP/src/include/lwip/prot/iana.h:
-../Core/Inc/tim.h:
-../Core/Inc/usart.h:
-../Core/Inc/gpio.h:
-../Core/Inc/interrupcao.h:
 ../Core/Inc/can.h:
+../Core/Inc/stm32f7xx_it.h:
+../Core/Inc/gpio.h:
 ../Core/Inc/led.h:
 ../Core/Inc/mte100.h:
 ../Core/Inc/mqtt.h:

@@ -18,7 +18,6 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <mte100.h>
@@ -93,13 +92,8 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_CAN1_Init();
-  MX_TIM1_Init();
-  MX_TIM3_Init();
   MX_LWIP_Init();
-  MX_UART4_Init();
   /* USER CODE BEGIN 2 */
-
-  printf("Initialing LwIP...\n");
 
   /* USER CODE END 2 */
 

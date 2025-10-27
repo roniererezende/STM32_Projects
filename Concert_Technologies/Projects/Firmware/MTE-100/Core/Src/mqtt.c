@@ -15,7 +15,31 @@ ip_addr_t     mqtt_server_ip;
 /* FUNCTIONS */
 void mqtt_init(void)
 {
+	mqtt_set_broker();
+	err_t err = mqtt_client_connect(client, &mqtt_server_ip, MQTT_BROKER_PORT, mqtt_connection_cb, 0, NULL);
 
+	if(err != ERR_OK)
+	{
+		mte100_error_handler();
+	}
+	else
+	{
+
+	}
+}
+
+void mqtt_set_broker(void)
+{
+	// Configura IP do broker
+	ipaddr_aton(MQTT_BROKER_IP, &mqtt_server_ip);
+
+	client = mqtt_client_new();
+
+	if(client == NULL)
+	{
+//		printf("Error to create MQTT client!\n");
+		Error_Handler();
+	}
 }
 
 void mqtt_publish_data(void)
@@ -26,23 +50,24 @@ void mqtt_publish_data(void)
 
 	if(result == ERR_OK)
 	{
-		printf("MQTT Published: %s\n", mte100.mqtt.payload);
+//		printf("MQTT Published: %s\n", mte100.mqtt.payload);
 	}
 	else
 	{
-		printf("MQTT Published error (%d)\n", result);
+//		printf("MQTT Published error (%d)\n", result);
 	}
 }
+
 
 void mqtt_connection_cb(mqtt_client_t *client, void *arg, mqtt_connection_status_t status)
 {
 	if(status == MQTT_CONNECT_ACCEPTED)
 	{
-		printf("Connect to the broker MQTT!\n");
+//		printf("Connect to the broker MQTT!\n");
 	}
 	else
 	{
-		printf("MQTT connection failure. Code: %d\n", status);
+//		printf("MQTT connection failure. Code: %d\n", status);
 	}
 }
 
