@@ -119,7 +119,12 @@ a cada 1 ms e chamado pela função SysTick_Handler() que está no arquivo stm32
 
 
 ***************************************************************************************************
-Por boas práticas de programação, dentro do arquivo main.c não realizadas implementações. É somente 
+**** OBSERVAÇÕES ****
+- Por boas práticas de programação, dentro do arquivo main.c não realizadas implementações. É somente 
 deixada as implementações realizadas pela própria IDE.
 
-A aplicação toda é realizada dentro do loop infinito com a chamada na função mte100_main().
+- A aplicação toda é realizada dentro do loop infinito com a chamada na função mte100_main().
+
+- Não foi utilizado o FreeRTOS, porque é uma tecnologia que ainda não domino e não achei prudente tentar fazer por dele e haver algum erro.
+  Por barematel, tenho mais segurança em desenvolver o código no momento.
+  Porém venho estudando o FreeRTOS, para realizar as implementações multitasks e utilizar as suas demais características.

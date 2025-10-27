@@ -248,18 +248,15 @@ void SysTick_Handler(void)
 		}
 	}
 
-	// A cada um 1 segundo, é incrementado a variável "count_second_mqtt"
 	if(count_millissecond_mqtt > 999)
 	{
 		count_second_mqtt++;
 		count_millissecond_mqtt = 0;
 
-		// A cada um 1 minuto, é incrementado a variável "count_minute_mqtt"
 		if(count_second_mqtt > 59)
 		{
 			count_minute_mqtt++;
 
-			// Quando é transcorrido 5 minutos, é habilitado a transmissão do dados via tópico MQTT
 			if(count_minute_mqtt > 5)
 			{
 				mte100.state = mte100_transmission_json;

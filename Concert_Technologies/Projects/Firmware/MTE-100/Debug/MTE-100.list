@@ -2826,6 +2826,7 @@ void SysTick_Handler(void)
 		}
 	}
 
+	// A cada um 1 segundo, é incrementado a variável "count_second_mqtt"
 	if(count_millissecond_mqtt > 999)
  80014ea:	4b18      	ldr	r3, [pc, #96]	@ (800154c <SysTick_Handler+0x140>)
  80014ec:	881b      	ldrh	r3, [r3, #0]
@@ -2844,6 +2845,7 @@ void SysTick_Handler(void)
  8001502:	2200      	movs	r2, #0
  8001504:	801a      	strh	r2, [r3, #0]
 
+		// A cada um 1 minuto, é incrementado a variável "count_minute_mqtt"
 		if(count_second_mqtt > 59)
  8001506:	4b12      	ldr	r3, [pc, #72]	@ (8001550 <SysTick_Handler+0x144>)
  8001508:	881b      	ldrh	r3, [r3, #0]
@@ -2858,6 +2860,7 @@ void SysTick_Handler(void)
  8001516:	4b0f      	ldr	r3, [pc, #60]	@ (8001554 <SysTick_Handler+0x148>)
  8001518:	801a      	strh	r2, [r3, #0]
 
+			// Quando é transcorrido 5 minutos, é habilitado a transmissão do dados via tópico MQTT
 			if(count_minute_mqtt > 5)
  800151a:	4b0e      	ldr	r3, [pc, #56]	@ (8001554 <SysTick_Handler+0x148>)
  800151c:	881b      	ldrh	r3, [r3, #0]
