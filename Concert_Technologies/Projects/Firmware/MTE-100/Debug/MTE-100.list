@@ -971,6 +971,7 @@ void can_init(void)
 	...
 
 08000b08 <can_reception>:
+
 void can_reception(void)
 {
  8000b08:	b480      	push	{r7}

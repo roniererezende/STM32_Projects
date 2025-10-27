@@ -118,7 +118,6 @@ void can_init(void)
 {
 
 }
-
 void can_reception(void)
 {
 	mte100.data.altura       = ((payload_id_can_0x100[0] << 8) | payload_id_can_0x100[1]);
